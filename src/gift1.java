@@ -6,6 +6,7 @@ TASK: gift1
 import java.io.*;
 import java.util.*;
 
+@SuppressWarnings("unused")
 public class gift1 {	
 	private static String[] names;
 	public static void main(String[] args) throws IOException {

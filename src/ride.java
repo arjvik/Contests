@@ -6,6 +6,7 @@ TASK: ride
 import java.io.*;
 import java.util.*;
 
+@SuppressWarnings("unused")
 public class ride {
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(new BufferedReader(new FileReader("ride.in")));

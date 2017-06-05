@@ -6,6 +6,7 @@ TASK: test
 import java.io.*;
 import java.util.*;
 
+@SuppressWarnings("unused")
 public class test {
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(new BufferedReader(new FileReader("test.in")));
