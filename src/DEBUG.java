@@ -23,6 +23,9 @@ class PrintWriter {
 	public void print(Object o){
 		System.out.print(o);
 	}
+	public void println() {
+		System.out.println();
+	}
 }
 
 class BufferedWriter{
