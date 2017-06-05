@@ -12,7 +12,7 @@ class PrintWriter {
 		System.out.println(o);
 	}
 	public void close(){
-		System.out.println("PrintWriter closed");
+		//System.out.println("PrintWriter closed");
 	}
 	public void print(int i){
 		System.out.print(i);
@@ -53,7 +53,7 @@ class Scanner{
 	}
 	public void close() {
 		scan.close();
-		System.out.println("Scanner closed");
+		//System.out.println("Scanner closed");
 	}
 }
 
