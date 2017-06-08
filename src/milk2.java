@@ -23,26 +23,21 @@ public class milk2 {
 				currEnd=end;
 			}
 		}
-		boolean[] milking=Arrays.copyOf(largeMilking, currEnd);
+		boolean[] milking=Arrays.copyOf(largeMilking, currEnd+1);
 		largeMilking=null;
-		System.err.println(Arrays.toString(milking));
 		boolean lastState=false;
 		int startMilk=-1, startIdle=-1,
 			maxMilk=0,maxIdle=0;
 		for (int i = 0; i < milking.length; i++) {
-			if(i%100==0)
-				System.err.println("i="+i+"\tMilking: "+milking[i]);
 			boolean b = milking[i];
 			if(b==lastState){
-				if(i%100==0)
-					System.err.println("Continuing");
 				continue;
 			}
+			
 			if(b==true){
 				startMilk=i;
 				if(startIdle!=-1){
 					int idleTime = i-startIdle;
-					System.err.println("Idle for "+idleTime);
 					if(maxIdle<idleTime){
 						maxIdle=idleTime;
 					}
@@ -51,7 +46,6 @@ public class milk2 {
 				startIdle=i;
 				if(startMilk!=-1){
 					int milkTime = i-startMilk;
-					System.err.println("Milking for "+milkTime);
 					if(maxMilk<milkTime){
 						maxMilk=milkTime;
 					}
