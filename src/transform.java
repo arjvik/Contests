@@ -6,7 +6,6 @@ TASK: transform
 import java.io.*;
 import java.util.*;
 
-@SuppressWarnings("unused")
 public class transform {
 	private static char[][] b4,af;
 	private static int N;	
