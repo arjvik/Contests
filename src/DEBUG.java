@@ -51,6 +51,12 @@ class Scanner{
 	public String nextLine() {
 		return scan.nextLine();
 	}
+	public boolean hasNext() {
+		return scan.hasNext();
+	}
+	public boolean hasNextLine() {
+		return scan.hasNextLine();
+	}
 	public void close() {
 		scan.close();
 		//System.out.println("Scanner closed");
