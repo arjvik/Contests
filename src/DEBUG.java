@@ -48,6 +48,9 @@ class Scanner{
 	public int nextInt() {
 		return scan.nextInt();
 	}
+	public long nextLong() {
+		return scan.nextLong();
+	}
 	public String nextLine() {
 		return scan.nextLine();
 	}
