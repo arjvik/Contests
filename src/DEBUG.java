@@ -67,8 +67,15 @@ class Scanner{
 }
 
 class BufferedReader{
+	java.util.Scanner scan;
 	public BufferedReader(Object wildcard) {
-		
+		scan = new java.util.Scanner(System.in);
+	}
+	public String readLine(){
+		return scan.hasNextLine()?scan.nextLine():null;
+	}
+	public void close(){
+		scan.close();
 	}
 }
 
