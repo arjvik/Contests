@@ -1,3 +1,4 @@
 /bin/
 *.out
 *.in
+/dict.txt
