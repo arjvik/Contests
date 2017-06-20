@@ -1,3 +1,5 @@
+import java.util.stream.Stream;
+
 class PrintWriter {
 	public PrintWriter(Object wildcard) {
 		
@@ -61,21 +63,28 @@ class Scanner{
 		return scan.hasNextLine();
 	}
 	public void close() {
-		scan.close();
+		//scan.close();
 		//System.out.println("Scanner closed");
 	}
 }
 
 class BufferedReader{
-	java.util.Scanner scan;
+	java.io.BufferedReader reader;
 	public BufferedReader(Object wildcard) {
-		scan = new java.util.Scanner(System.in);
+		//scan = new java.util.Scanner(System.in);
+		reader = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
 	}
 	public String readLine(){
-		return scan.hasNextLine()?scan.nextLine():null;
+		return reader.readLine();
+		//return scan.hasNextLine()?scan.nextLine():null;
+		//String line;
+		//return scan.hasNextLine()?(!(line=scan.nextLine()).equals("eof")?line:null):null;
+	}
+	public Stream<String> lines(){
+		return reader.lines();
 	}
 	public void close(){
-		scan.close();
+		//scan.close();
 	}
 }
 
