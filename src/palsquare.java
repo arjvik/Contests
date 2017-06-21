@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 @SuppressWarnings("unused")
-public class palsquare2 {
+public class palsquare {
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(new BufferedReader(new FileReader("palsquare.in")));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("palsquare.out")));
