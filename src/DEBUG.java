@@ -72,20 +72,16 @@ class Scanner{
 class BufferedReader{
 	java.io.BufferedReader reader;
 	public BufferedReader(Object wildcard) {
-		//scan = new java.util.Scanner(System.in);
 		reader = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
 	}
 	public String readLine() throws IOException{
-		return reader.readLine();
-		//return scan.hasNextLine()?scan.nextLine():null;
-		//String line;
-		//return scan.hasNextLine()?(!(line=scan.nextLine()).equals("eof")?line:null):null;
+		String line = reader.readLine();
+		return "eof".equals(line)?null:line;
 	}
 	public Stream<String> lines(){
 		return reader.lines();
 	}
 	public void close(){
-		//scan.close();
 	}
 }
 
