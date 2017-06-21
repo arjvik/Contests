@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.stream.Stream;
 
 class PrintWriter {
@@ -74,7 +75,7 @@ class BufferedReader{
 		//scan = new java.util.Scanner(System.in);
 		reader = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
 	}
-	public String readLine(){
+	public String readLine() throws IOException{
 		return reader.readLine();
 		//return scan.hasNextLine()?scan.nextLine():null;
 		//String line;
