@@ -21,7 +21,7 @@ public class namenum {
 				.peek((s)->i.incrementAndGet())
 				.forEachOrdered(out::println)
 				;
-		if(i.equals(0))
+		if(i.get()==0)
 			out.println("NONE");
 		dictin.close();
 		in.close();
