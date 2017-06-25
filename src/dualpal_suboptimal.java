@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.*;
 
 @SuppressWarnings("unused")
-public class dualpal2 {
+public class dualpal_suboptimal {
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(new BufferedReader(new FileReader("dualpal.in")));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("dualpal.out")));
