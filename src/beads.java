@@ -6,7 +6,6 @@ TASK: beads
 import java.io.*;
 import java.util.*;
 
-@SuppressWarnings("unused")
 public class beads {
 	private static int N;
 	private static char beads[];
