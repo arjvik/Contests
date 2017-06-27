@@ -17,6 +17,9 @@ class PrintWriter {
 	public void println(Object o){
 		System.out.println(o);
 	}
+	public void println(char c){
+		System.out.println(c);
+	}
 	public void close(){
 		//System.out.println("PrintWriter closed");
 	}
@@ -28,6 +31,9 @@ class PrintWriter {
 	}
 	public void print(Object o){
 		System.out.print(o);
+	}
+	public void print(char c){
+		System.out.print(c);
 	}
 	public void println() {
 		System.out.println();
