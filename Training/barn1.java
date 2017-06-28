@@ -39,7 +39,7 @@ public class barn1 {
 		isOccupied = new boolean[s];
 		boards = new boolean[s];
 		for (int i = 0; i < c; i++) {
-			isOccupied[in.nextInt()] = true;
+			isOccupied[in.nextInt()-1] = true;
 		}
 		int firstCow = -1, lastCow=0;
 		for (int i = 0; i < s; i++) {
@@ -64,8 +64,8 @@ public class barn1 {
 				}
 			}
 		}
-		gaps.sort((i,j)->( ((i.y-i.x) > (j.y-j.x)) ? 1 : -1 ));
-		for (int i = 0; i <= m-2 && i <= gaps.size(); i++) {
+		gaps.sort((i,j)->( ((i.y-i.x) > (j.y-j.x)) ? -1 : 1 ));
+		for (int i = 0; i <= m-2 && i < gaps.size(); i++) {
 			OrderedPair pair = gaps.get(i);
 			for (int j = pair.x; j < pair.y; j++) {
 				boards[j] = false;
