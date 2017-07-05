@@ -2,3 +2,4 @@
 *.out
 *.in
 /dict.txt
+/testdata/
