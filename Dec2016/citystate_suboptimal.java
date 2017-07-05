@@ -6,8 +6,8 @@ TASK: citystate
 import java.io.*;
 import java.util.*;
 
-public class citystate {
-	public static void main(String[] args) throws IOException {
+public class citystate_suboptimal {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		Scanner in = new Scanner(new BufferedReader(new FileReader("citystate.in")));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("citystate.out")));
 		int n = in.nextInt();
@@ -29,25 +29,15 @@ public class citystate {
 		Set<UnorderedPair> pairs = new HashSet<>();
 		for (int i = 0; i < cities.length; i++) {
 			if(state.containsKey(cities[i][0].substring(0, 2))){
-				List<Integer> list = state.get(cities[i][0].substring(0, 2));
-				for (Integer i2 : list){
-					if(cities[i2][0].startsWith(cities[i][1])&&i!=i2&&cities[i][1]!=cities[i2][1]){
-						System.out.println(cities[i][0]+" "+cities[i][1]+"\n"+cities[i2][0]+" "+cities[i2][1]+"\n");
-						assert verify(cities[i],cities[i2],i,i2,pairs);
+				List<Integer> list = state.get(cities[i][0]);
+				for (Integer i2 : list)
+					if(cities[i2][0].startsWith(cities[i][1])&&i!=i2&&!cities[i][1].equals(cities[i2][1]))
 						pairs.add(new UnorderedPair(i,i2));
-					}
-				}
 			}
 		}		
 		out.println(pairs.size());
 		in.close();
 		out.close();
-	}
-	
-	private static boolean verify(String[] city1, String[] city2, int i, Integer i2, Set<UnorderedPair> pairs) {
-		if(!city1[0].startsWith(city2[1])) return false;
-		if(!city2[0].startsWith(city1[1])) return false;
-		return true;
 	}
 
 	private static class UnorderedPair implements Comparable<UnorderedPair>{
