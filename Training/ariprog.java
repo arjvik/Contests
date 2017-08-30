@@ -6,12 +6,14 @@ TASK: ariprog
 import java.io.*;
 import java.util.*;
 
-public class ariprog_suboptimal {
+public class ariprog {
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(new BufferedReader(new FileReader("ariprog.in")));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("ariprog.out")));
 		int n = in.nextInt();
 		int m = in.nextInt();
+		int maxDiff = (m*m*2)/(n-1)+1;
+		System.err.println("Maxdiff = "+maxDiff);
 		long start = System.currentTimeMillis();
 		Set<Integer> bisquaresSet = new HashSet<>();
 		int[] bisquares = new int[((m*(m+1)) / 2) + m + 1];
@@ -37,6 +39,8 @@ public class ariprog_suboptimal {
 				int a1 = bisquares[j];
 			//prog: for (int a1 : bisquaresSet) {
 				int d = a1 - a0;
+				if(d > maxDiff)
+					continue prog;
 				//if(d<=0){
 				//	System.err.printf("THIS SHOULD NOT HAPPEN d=%d, i=%d, bs(i)=%d, j=%d, bs(j)=%d\n",d,i,bisquares.get(i),j,bisquares.get(j));
 				//	continue prog;
