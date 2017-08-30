@@ -6,7 +6,7 @@ TASK: ariprog
 import java.io.*;
 import java.util.*;
 
-public class ariprog {
+public class ariprog_suboptimal {
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(new BufferedReader(new FileReader("ariprog.in")));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("ariprog.out")));
@@ -14,29 +14,31 @@ public class ariprog {
 		int m = in.nextInt();
 		long start = System.currentTimeMillis();
 		Set<Integer> bisquaresSet = new HashSet<>();
-		List<Integer> bisquares = new ArrayList<>(/*((m*(m-1)) / 2) + m*/);
+		int[] bisquares = new int[((m*(m+1)) / 2) + m + 1];
+		System.err.println("Allocated to size "+(((m*(m+1)) / 2) + m + 1));
+		int numBisquares = 0;
 		for (int p1 = 0; p1 <= m; p1++) {
 			int p = p1 * p1;
 			for (int q = 0; q <= m; q++) {
 				int x = (p + (q * q));
 				if(!bisquaresSet.contains(x)){
-					bisquares.add(x);
+					bisquares[numBisquares++]=x;
 					bisquaresSet.add(x);
 				}
 			}
 		}
-		bisquares.sort(null);
-		System.err.println("Done calculating bisquares: length "+bisquares.size()+"\n\tTook "+((System.currentTimeMillis()-start)/1000d)+"s");
+		Arrays.sort(bisquares,0,numBisquares);
+		System.err.println("Done calculating bisquares: length "+numBisquares+"\n\tTook "+((System.currentTimeMillis()-start)/1000d)+"s");
 		Set<Pair> progs = new TreeSet<Pair>();
-		for (int i = 0; i < bisquares.size() - (n-1); i++) {
-			int a0 = bisquares.get(i);
+		for (int i = 0; i < numBisquares - (n-1); i++) {
+			int a0 = bisquares[i];
 		//for (int a0 : bisquaresSet) {
-			prog: for (int j = i+1; j < bisquares.size(); j++) {
-				int a1 = bisquares.get(j);
+			prog: for (int j = i+1; j < numBisquares; j++) {
+				int a1 = bisquares[j];
 			//prog: for (int a1 : bisquaresSet) {
 				int d = a1 - a0;
 				//if(d<=0){
-				//	System.out.printf("THIS SHOULD NOT HAPPEN d=%d, i=%d, bs(i)=%d, j=%d, bs(j)=%d\n",d,i,bisquares.get(i),j,bisquares.get(j));
+				//	System.err.printf("THIS SHOULD NOT HAPPEN d=%d, i=%d, bs(i)=%d, j=%d, bs(j)=%d\n",d,i,bisquares.get(i),j,bisquares.get(j));
 				//	continue prog;
 				//}
 				int next = a0 + (n-1)*d;
@@ -47,7 +49,7 @@ public class ariprog {
 				progs.add(new Pair(a0, d));
 			}
 			//if(i%1==0)
-			//	System.out.printf("On outer iteration %d\n",i);
+			//	System.err.printf("On outer iteration %d\n",i);
 		}
 		if(progs.size()==0){
 			out.println("NONE");
