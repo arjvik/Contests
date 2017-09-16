@@ -63,6 +63,9 @@ class Scanner{
 	public long nextLong() {
 		return scan.nextLong();
 	}
+	public boolean nextBoolean() {
+		return scan.nextBoolean();
+	}
 	public String nextLine() {
 		return scan.nextLine();
 	}
