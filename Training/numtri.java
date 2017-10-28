@@ -41,6 +41,4 @@ public class numtri {
 		out.close(); // close the output file
 		System.exit(0); // don't omit this!
 	}
-
-
 }
