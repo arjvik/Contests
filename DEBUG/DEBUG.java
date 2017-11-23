@@ -75,6 +75,9 @@ class Scanner{
 	public boolean hasNextLine() {
 		return scan.hasNextLine();
 	}
+	public boolean hasNextInt() {
+		return scan.hasNextInt();
+	}
 	public void close() {
 		//scan.close();
 		//System.out.println("Scanner closed");
