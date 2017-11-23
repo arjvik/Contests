@@ -74,5 +74,6 @@ public class Etch {
 			}
 			System.out.println();
 		}
+		System.out.println();
 	}
 }
