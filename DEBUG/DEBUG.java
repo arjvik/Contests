@@ -56,6 +56,7 @@ class Scanner{
 	java.util.Scanner scan;
 	public Scanner(Object wildcard) {
 		scan=new java.util.Scanner(System.in);
+		System.err.println("Reading input from file...");
 	}
 	public int nextInt() {
 		return scan.nextInt();
@@ -68,6 +69,9 @@ class Scanner{
 	}
 	public String nextLine() {
 		return scan.nextLine();
+	}
+	public String next() {
+		return scan.next();
 	}
 	public boolean hasNext() {
 		return scan.hasNext();
@@ -82,6 +86,7 @@ class Scanner{
 		//scan.close();
 		//System.out.println("Scanner closed");
 	}
+	
 }
 
 class BufferedReader{
