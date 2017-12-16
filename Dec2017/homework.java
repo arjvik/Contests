@@ -17,13 +17,11 @@ public class homework {
 		}
 		double maxScore = Double.NEGATIVE_INFINITY;
 		TreeSet<Integer> maxK = new TreeSet<>();
-		for (int k = 1; k <= n - 2; k++) {
-			int sum = 0;
-			int minQ = Integer.MAX_VALUE;
-			for (int i = k; i < n; i++) {
-				sum+=scores[i];
-				minQ = Math.min(minQ, scores[i]);
-			}
+		int sum = scores[n-1];
+		int minQ = Integer.MAX_VALUE;
+		for (int k = n - 2; k > 0; k--) {
+			sum+=scores[k];
+			minQ = Math.min(minQ, scores[k]);
 			double score = (sum-minQ)/((double)(n-k-1));
 			if(score>maxScore){
 				maxK.clear();
