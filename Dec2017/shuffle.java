@@ -43,7 +43,7 @@ public class shuffle {
 	}
 	private static char[] toString(BitSet b) {
 		char[] c = new char[n];
-		for (int i = 0; i < b.length(); i++) {
+		for (int i = 0; i < n; i++) {
 			c[i] = b.get(i)?'+':'-';
 		}
 		return c;
