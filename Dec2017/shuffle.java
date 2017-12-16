@@ -6,33 +6,55 @@ TASK: shuffle
 import java.io.*;
 import java.util.*;
 
-@SuppressWarnings("unused")
 public class shuffle {
+	private static final int INITIAL_SHUFFLES = 500;
+	private static final int NUM_SHUFFLES = 200;
 	static int[] shuffle;
+	static int n;
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(new BufferedReader(new FileReader("shuffle.in")));
-		java.io.PrintWriter out = new java.io.PrintWriter(new java.io.BufferedWriter(new java.io.FileWriter("shuffle.out")));
-		int n = in.nextInt();
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("shuffle.out")));
+		n = in.nextInt();
 		shuffle = new int[n];
 		for (int i = 0; i < n; i++) {
-			shuffle[in.nextInt()-1] = i;
+			shuffle[i] = in.nextInt()-1;
 		}
-		int[] cows = new int[n];
+		
+		BitSet b = new BitSet(n);
+		b.flip(0, n);
+		//System.out.println(toString(b));
+		for (int i = 0; i < INITIAL_SHUFFLES; i++) {
+			b = shuffle1(b);
+			//System.out.println(toString(b));
+		}
+		BitSet c = shuffle1(b);
+		for (int i = 0; i < NUM_SHUFFLES; i++) {
+			b = shuffle1(b);
+			c.and(b);
+		}
+		int count=0;
 		for (int i = 0; i < n; i++) {
-			cows[i] = in.nextInt();
+			if(c.get(i))
+				count++;
 		}
-		cows = unshuffle(unshuffle(unshuffle(cows))); //3 times
-		for (int i = 0; i < n ; i++) {
-			out.println(cows[i]);
-		}
+		out.println(count);
 		in.close();
 		out.close();
 	}
-	public static int[] unshuffle(final int[] cows){
-		int[] uns = new int[cows.length];
-		for (int i = 0; i < cows.length; i++) {
-			uns[shuffle[i]] = cows[i];
+	private static char[] toString(BitSet b) {
+		char[] c = new char[n];
+		for (int i = 0; i < b.length(); i++) {
+			c[i] = b.get(i)?'+':'-';
 		}
-		return uns;
+		return c;
+	}
+	private static BitSet shuffle1(BitSet b) {
+		BitSet ans = new BitSet(n);
+		for (int i = 0; i < shuffle.length; i++) {
+			if(b.get(i)){
+				ans.set(shuffle[i]);
+			}
+		}
+		return ans;
 	}
 }
