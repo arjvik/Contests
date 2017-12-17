@@ -6,7 +6,7 @@ TASK: measurement
 import java.io.*;
 import java.util.*;
 
-public class measurementSlow {
+public class measurementSlow2 {
 	public static class Entry implements Comparable<Entry>{
 		int date;
 		int name;
@@ -47,14 +47,7 @@ public class measurementSlow {
 		int count = 0;
 		for (Entry e : entries) {
 			output.put(e.name,output.get(e.name)+e.addition);
-			Set<Integer> newLeaderboard = getLeaderboard(output);
-			if(!leaderboard.equals(newLeaderboard)){
-				count++;
-				leaderboard = newLeaderboard;
-			}
-			/*if(leaderboard.contains(e.name)){
-				if(e.addition==0)
-					continue loop;
+			if(leaderboard.contains(e.name)&&leaderboard.size()!=1){
 				if(e.addition>0){
 					count++;
 					leaderboard.clear();
@@ -69,7 +62,7 @@ public class measurementSlow {
 					count++;
 					leaderboard = newLeaderboard;
 				}
-			}*/
+			}
 		}
 		
 		out.println(count);

@@ -6,7 +6,7 @@ TASK: measurement
 import java.io.*;
 import java.util.*;
 
-public class measurementSlow {
+public class measurementSlow4 {
 	public static class Entry implements Comparable<Entry>{
 		int date;
 		int name;
@@ -47,29 +47,37 @@ public class measurementSlow {
 		int count = 0;
 		for (Entry e : entries) {
 			output.put(e.name,output.get(e.name)+e.addition);
-			Set<Integer> newLeaderboard = getLeaderboard(output);
-			if(!leaderboard.equals(newLeaderboard)){
-				count++;
-				leaderboard = newLeaderboard;
-			}
-			/*if(leaderboard.contains(e.name)){
-				if(e.addition==0)
-					continue loop;
-				if(e.addition>0){
+			if(leaderboard.contains(e.name)&&e.addition>0){
+				if(leaderboard.size()!=1){
 					count++;
 					leaderboard.clear();
 					leaderboard.add(e.name);
-				}else{
-					count++;
-					leaderboard.remove(e.name);
 				}
-			}else{
+			}else if(leaderboard.contains(e.name)&&e.addition<0&&leaderboard.size()!=1){
+				count++;
+				leaderboard.remove(e.name);
+			}else if(leaderboard.contains(e.name)&&e.addition<0&&leaderboard.size()==1){
 				Set<Integer> newLeaderboard = getLeaderboard(output);
 				if(!leaderboard.equals(newLeaderboard)){
 					count++;
 					leaderboard = newLeaderboard;
 				}
-			}*/
+			}else{
+				int max = output.get(leaderboard.iterator().next());
+				if(max == output.get(e.name)){
+					count++;
+					leaderboard.add(e.name);
+				}else if(max > output.get(e.name)){
+					count++;
+					leaderboard.clear();
+					leaderboard.add(e.name);
+				}
+				/*Set<Integer> newLeaderboard = getLeaderboard(output);
+				if(!leaderboard.equals(newLeaderboard)){
+					count++;
+					leaderboard = newLeaderboard;
+				}*/
+			}
 		}
 		
 		out.println(count);
