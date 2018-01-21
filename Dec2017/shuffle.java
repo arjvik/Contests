@@ -41,6 +41,7 @@ public class shuffle {
 		in.close();
 		out.close();
 	}
+	@SuppressWarnings("unused")
 	private static char[] toString(BitSet b) {
 		char[] c = new char[n];
 		for (int i = 0; i < n; i++) {
