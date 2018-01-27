@@ -1,25 +1,33 @@
 /*
 ID: arjvik1
 LANG: JAVA
-TASK: mootube
+TASK: mootube2
 */
 import java.io.*;
 import java.util.*;
 import java.util.Map.Entry;
 
-public class mootube {
+@SuppressWarnings("unused")
+public class mootube2 {
 	private static int n;
 	private static int q;
 	private static Node[] nodes;
 	private static int min_r = Integer.MAX_VALUE;
 	private static boolean DEBUG = false;
+	private static List<Map<Integer,Integer>> similar;
+	
+	private static final int MAX = Integer.MAX_VALUE;
+	
+	private static final boolean USE_MIN_ID = false;
 	
 	public static void main(String[] args) throws IOException {
+		
 		Scanner in = new Scanner(new BufferedReader(new FileReader("mootube.in")));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("mootube.out")));
 		n = in.nextInt();
 		q = in.nextInt();
 		nodes = new Node[n + 1]; //IGNORE nodes[0];
+		similar = new ArrayList<Map<Integer,Integer>>(n + 1);
 		for (int i = 0; i < n - 1; i++) {
 			int a = in.nextInt();
 			int b = in.nextInt();
@@ -33,43 +41,37 @@ public class mootube {
 			nodes[a].connections.put(nodes[b], r);
 			nodes[b].connections.put(nodes[a], r);
 		}
-		boolean[] visited = new boolean[n+1];
-		for (int i = 0; i < q; i++) {
-			int k = in.nextInt();
-			int v = in.nextInt();
-			if(k <= min_r)
-				out.println(n-1);
-			else
-				out.println(run(k,v,visited,0) - 1);
+		similar.add(null);
+		for (int i = 1; i <= n; i++) {
+			similar.add(new HashMap<>());
+			boolean[] visited = new boolean[n+1];
+			run(i,i,MAX,similar.get(i),visited);
+			/*for (Entry<Integer,Integer> entry: similar.get(i).entrySet()) {
+				similar.get(entry.getKey()).put(i, entry.getValue());
+			}*/
+		}
+		for(int i = 0; i < q; i++){
+			final int k = in.nextInt();
+			final int v = in.nextInt();
+			out.println(similar.get(v).entrySet()
+									.stream()
+									.filter(e -> e.getValue()>=k)
+									.count());
 		}
 		in.close();
 		out.close();
 	}
-	private static int run(final int k, final int v, final boolean[] FINAL_VISITED, final int debug_level) {
-		if(DEBUG){
-			System.err.print("                                                               ".substring(0,debug_level));
-			System.err.print("Running ");
-			if(debug_level == 0)
-				System.err.printf("k=%d ",k);
-			System.err.printf("v=%d visited=%s%n",v,Arrays.toString(FINAL_VISITED));
-			
-		}
-		int i = 1;
+	private static void run(final int v, final int max_id, final int min_r, Map<Integer,Integer> map, final boolean[] visited) {
 		Node n = nodes[v];
-		boolean[] visited = Arrays.copyOf(FINAL_VISITED, FINAL_VISITED.length);
 		visited[v] = true;
 		for (Entry<Node, Integer> entry : n.connections.entrySet()) {
-			if(entry.getValue()<k)
-				continue;
 			if(visited[entry.getKey().id])
 				continue;
-			i += run(k,entry.getKey().id,visited,debug_level+1);
+			if(USE_MIN_ID&&entry.getKey().id>max_id)
+				continue;
+			map.put(entry.getKey().id, Math.min(min_r, entry.getValue()));
+			run(entry.getKey().id, max_id, Math.min(min_r, entry.getValue()), map, visited);
 		}
-		if(DEBUG){
-			System.err.print("                                                                ".substring(0,debug_level));
-			System.err.printf("returning %d%n",i);
-		}
-		return i;
 	}
 	public static class Node{
 		int id;
@@ -88,7 +90,4 @@ public class mootube {
 			this.connections = new HashMap<>(connections);
 		}
 	}
-	
-	
-
 }

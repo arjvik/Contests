@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.*;
 import java.util.Map.Entry;
 
-public class mootube {
+public class mootube3 {
 	private static int n;
 	private static int q;
 	private static Node[] nodes;
@@ -33,8 +33,8 @@ public class mootube {
 			nodes[a].connections.put(nodes[b], r);
 			nodes[b].connections.put(nodes[a], r);
 		}
-		boolean[] visited = new boolean[n+1];
 		for (int i = 0; i < q; i++) {
+			boolean[] visited = new boolean[n+1];
 			int k = in.nextInt();
 			int v = in.nextInt();
 			if(k <= min_r)
@@ -45,18 +45,17 @@ public class mootube {
 		in.close();
 		out.close();
 	}
-	private static int run(final int k, final int v, final boolean[] FINAL_VISITED, final int debug_level) {
+	private static int run(final int k, final int v, final boolean[] visited, final int debug_level) {
 		if(DEBUG){
 			System.err.print("                                                               ".substring(0,debug_level));
 			System.err.print("Running ");
 			if(debug_level == 0)
 				System.err.printf("k=%d ",k);
-			System.err.printf("v=%d visited=%s%n",v,Arrays.toString(FINAL_VISITED));
+			System.err.printf("v=%d visited=%s%n",v,Arrays.toString(visited));
 			
 		}
 		int i = 1;
 		Node n = nodes[v];
-		boolean[] visited = Arrays.copyOf(FINAL_VISITED, FINAL_VISITED.length);
 		visited[v] = true;
 		for (Entry<Node, Integer> entry : n.connections.entrySet()) {
 			if(entry.getValue()<k)
