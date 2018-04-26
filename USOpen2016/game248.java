@@ -6,7 +6,6 @@ TASK: game248
 import java.io.*;
 import java.util.*;
 
-@SuppressWarnings("unused")
 public class game248 {
 	private static final String NAME = "262144";
 	public static void main(String[] args) throws IOException {
