@@ -56,7 +56,7 @@ class Scanner{
 	java.util.Scanner scan;
 	public Scanner(Object wildcard) {
 		scan=new java.util.Scanner(System.in);
-		System.err.println("Reading input from file...");
+		System.err.println("Reading input from \"file\"...");
 	}
 	public int nextInt() {
 		return scan.nextInt();
