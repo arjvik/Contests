@@ -64,6 +64,9 @@ class Scanner{
 	public long nextLong() {
 		return scan.nextLong();
 	}
+	public double nextDouble() {
+		return scan.nextDouble();
+	}
 	public boolean nextBoolean() {
 		return scan.nextBoolean();
 	}
@@ -81,6 +84,15 @@ class Scanner{
 	}
 	public boolean hasNextInt() {
 		return scan.hasNextInt();
+	}
+	public boolean hasNextLong() {
+		return scan.hasNextLong();
+	}
+	public boolean hasNextDouble() {
+		return scan.hasNextDouble();
+	}
+	public boolean hasNextBoolean() {
+		return scan.hasNextBoolean();
 	}
 	public void close() {
 		//scan.close();
