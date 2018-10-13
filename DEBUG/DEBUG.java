@@ -2,9 +2,6 @@ import java.io.IOException;
 import java.util.stream.Stream;
 
 class PrintWriter {
-	static{
-		System.setProperty("DEBUG","DEBUG");
-	}
 	public PrintWriter(Object wildcard) {
 		
 	}
@@ -53,6 +50,9 @@ class FileWriter{
 }
 
 class Scanner{
+	static{
+		System.setProperty("DEBUG","DEBUG");
+	}
 	java.util.Scanner scan;
 	public Scanner(Object wildcard) {
 		scan=new java.util.Scanner(System.in);
