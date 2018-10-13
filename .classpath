@@ -22,4 +22,5 @@
 	<classpathentry kind="src" path="UIL/2012Regional"/>
 	<classpathentry kind="src" path="OpenKattis"/>
 	<classpathentry kind="src" path="FirstBytes/2017"/>
+	<classpathentry kind="src" path="FirstBytes/2018"/>
 </classpath>
