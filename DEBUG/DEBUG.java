@@ -1,7 +1,8 @@
+import java.io.Closeable;
 import java.io.IOException;
 import java.util.stream.Stream;
 
-class PrintWriter {
+class PrintWriter implements Closeable {
 	public PrintWriter(Object wildcard) {
 		
 	}

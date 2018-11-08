@@ -11,6 +11,7 @@ public class midoffer {
 		in.nextLine();
 		for (int i = 0; i < k; i++) {
 			String[] c = in.nextLine().split(", ");
+			@SuppressWarnings("resource")
 			java.util.Scanner s = new java.util.Scanner(c[3]);
 			double x = s.nextDouble(),
 				   y = s.nextDouble(),

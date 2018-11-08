@@ -6,6 +6,7 @@ TASK: a1paper
 import java.io.*;
 import java.util.*;
 
+@SuppressWarnings("unused")
 public class a1paper {
 	private static final double PERIMETER_OF_A2 = 2.03010353025643560974862544;
 	private static final int NUM_A30_PAGES = 536870912;

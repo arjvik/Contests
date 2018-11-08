@@ -16,6 +16,7 @@ public class D_smallestmultiple {
 			// I have to prefix it like that because on my computer
 			// I have overriden Scanner to make it read from console
 			// always, even when passing it a file.
+			@SuppressWarnings("resource")
 			java.util.Scanner s = new java.util.Scanner(line);
 			BigInteger d = BigInteger.ONE;
 			while(s.hasNext()) {

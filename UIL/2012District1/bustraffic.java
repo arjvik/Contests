@@ -14,6 +14,7 @@ public class bustraffic {
 		inn.nextLine();
 		for (int CASE_NUM = 0; CASE_NUM < NUM_CASES; CASE_NUM++) {
 			String line = inn.nextLine();
+			@SuppressWarnings("resource")
 			java.util.Scanner in = new java.util.Scanner(line);
 			List<Integer> pass = new ArrayList<>();
 			pass.add(in.nextInt());

@@ -1,4 +1,3 @@
-
 /*
 ID: arjvik1
 LANG: JAVA
@@ -7,7 +6,6 @@ TASK: snowboots
 import java.io.*;
 import java.util.*;
 
-@SuppressWarnings("unused")
 public class snowboots {
 	private static int[] depth, b_depth, b_dist;
 

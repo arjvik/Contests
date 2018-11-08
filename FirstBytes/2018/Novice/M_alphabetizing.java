@@ -7,7 +7,6 @@ TASK: M
 import java.io.*;
 import java.util.*;
 
-@SuppressWarnings("unused")
 public class M_alphabetizing {
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(new BufferedReader(new FileReader("M.txt")));

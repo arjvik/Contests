@@ -6,7 +6,6 @@ TASK: B_orderup
 import java.io.*;
 import java.util.*;
 
-@SuppressWarnings("unused")
 public class B_orderup {
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(new BufferedReader(new FileReader("B.txt")));
