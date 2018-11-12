@@ -20,6 +20,7 @@
 	<classpathentry kind="src" path="UIL/2011Regional"/>
 	<classpathentry kind="src" path="UIL/2012District1"/>
 	<classpathentry kind="src" path="UIL/2012Regional"/>
+	<classpathentry kind="src" path="UIL/2018ProsperInvitational"/>
 	<classpathentry kind="src" path="OpenKattis"/>
 	<classpathentry kind="src" path="FirstBytes/2017/Novice"/>
 	<classpathentry kind="src" path="FirstBytes/2018/Novice"/>
