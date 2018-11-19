@@ -15,8 +15,8 @@ public class snowboots {
 		int n = in.nextInt();
 		int b = in.nextInt();
 		depth = new int[n];
-		b_depth = new int[n];
-		b_dist = new int[n];
+		b_depth = new int[b];
+		b_dist = new int[b];
 		for (int i = 0; i < n; i++)
 			depth[i] = in.nextInt();
 		Map<Integer, Integer> depth_dist = new TreeMap<>();
