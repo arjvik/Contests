@@ -32,7 +32,6 @@ public class UnionFind {
 			} else {
 				parent[ri] = rj;
 				rank[rj]++;
-
 			}
 		}
 	}
@@ -47,4 +46,5 @@ public class UnionFind {
 		else
 			return (parent[i] = root(parent[i]));
 	}
+
 }
