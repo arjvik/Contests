@@ -11,7 +11,6 @@ import static java.lang.System.out;
 public class Bases {
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(new BufferedReader(new FileReader("bases.dat")));
-		//TODO Auto-generated body
 		int n = in.nextInt();
 		System.out.println("Base 10 Base 2  Base 4  Base 8  Base 12 Base 16");
 		for (int i = 1; i <= n; i++) {

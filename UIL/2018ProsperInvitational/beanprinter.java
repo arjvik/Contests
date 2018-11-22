@@ -15,6 +15,5 @@ public class beanprinter {
 				"B---B-E-------A-------A---N---N-N\n" + 
 				"B---B-E------A---------A--N----NN\n" + 
 				"BBBBB-EEEEE-A-----------A-N-----N");
-		//TODO Auto-generated code
 	}
 }

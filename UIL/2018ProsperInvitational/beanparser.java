@@ -16,7 +16,6 @@ public class beanparser {
 			String s = in.nextLine().toLowerCase();
 			System.out.println(s.split("bean").length-1 + (s.endsWith("bean")?1:0));
 		}
-		//TODO Auto-generated code
 		in.close();
 	}
 }

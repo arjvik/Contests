@@ -29,7 +29,6 @@ public class beangame {
 			System.out.println("NO");
 					
 		}
-		//TODO Auto-generated code
 		in.close();
 	}
 	public static <T> Set<Set<T>> getAllSubsets(List<T> vals){
