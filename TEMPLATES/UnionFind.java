@@ -23,10 +23,10 @@ public class UnionFind {
 		int rj = root(j);
 		if(size[ri] > size[rj]) {
 			id[rj] = ri;
-			size[rj] += size[ri];
+			size[ri] += size[rj];
 		} else {
 			id[ri] = rj;
-			size[ri] += size[rj];
+			size[rj] += size[ri];
 		}
 	}
 	
