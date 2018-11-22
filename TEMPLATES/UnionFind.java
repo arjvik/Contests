@@ -1,3 +1,4 @@
+
 /*
 ID: arjvik1
 LANG: JAVA
@@ -8,40 +9,42 @@ import java.util.*;
 
 @SuppressWarnings("unused")
 public class UnionFind {
-	private final int[] id;
-	private final int[] size;
-	
+	private final int[] parent;
+	private final int[] rank;
+
 	public UnionFind(int n) {
-		id = new int[n];
-		Arrays.fill(id, -1);
-		size = new int[n];
-		Arrays.fill(size, 1);
+		parent = new int[n];
+		Arrays.fill(parent, -1);
+		rank = new int[n];
 	}
-	
+
 	public void union(int i, int j) {
 		int ri = root(i);
 		int rj = root(j);
-		if(size[ri] > size[rj]) {
-			id[rj] = ri;
-			size[ri] += size[rj];
+		if (rank[ri] > rank[rj]) {
+			parent[rj] = ri;
+		} else if (rank[rj] > rank[ri]) {
+			parent[ri] = rj;
 		} else {
-			id[ri] = rj;
-			size[rj] += size[ri];
+			if (Math.random() > 0.5) {
+				parent[rj] = ri;
+				rank[ri]++;
+			} else {
+				parent[ri] = rj;
+				rank[rj]++;
+
+			}
 		}
 	}
-	
+
 	public boolean connected(int i, int j) {
 		return root(i) == root(j);
 	}
 
 	private int root(int i) {
-		if(id[i] == -1)
+		if (parent[i] == -1)
 			return i;
 		else
-			return (id[i] = root(id[i]));
-	}
-	
-	public int size(int i) {
-		return size[i];
+			return (parent[i] = root(parent[i]));
 	}
 }
