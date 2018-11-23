@@ -58,7 +58,7 @@ public class snowboots2 {
 		private final int[] parent;
 		private final int[] rank;
 		private final int[] size;
-		private /***/ int maxSize = 1;
+		private int maxSize = 1;
 
 		public UnionFind(int n) {
 			parent = new int[n];
