@@ -9,6 +9,7 @@ import java.util.*;
 public class snowboots2 {
 	private static final boolean SKIP_ALREADY_CONNECTED_CHECK = Boolean.TRUE;
 	private static int[] depth, b_depth, b_dist;
+	private static boolean[] activated;
 	private static int maxDepth = Integer.MIN_VALUE;
 
 	public static void main(String[] args) throws IOException {
@@ -17,6 +18,7 @@ public class snowboots2 {
 		int n = in.nextInt();
 		int b = in.nextInt();
 		depth = new int[n];
+		activated = new boolean[n];
 		b_depth = new int[b];
 		b_dist = new int[b];
 		for (int i = 0; i < n; i++) {
@@ -46,12 +48,20 @@ public class snowboots2 {
 	private static int getMaxStretch(int bd, UnionFind uf, int n) {
 		if(bd >= maxDepth)
 			return 0;
-		for(int i = 0; i < n-1; i++) {
-			if((SKIP_ALREADY_CONNECTED_CHECK || !uf.connected(i, i+1)) && depth[i] > bd && depth[i+1] > bd) {
-				uf.union(i, i+1);
+		for(int i = 0; i < n; i++) {
+			if(!activated(i) && depth[i] > bd) {
+				activated[i] = true;
+				if(activated(i-1))
+					uf.union(i-1, i);
+				if(activated(i+1))
+					uf.union(i, i+1);
 			}
 		}
 		return uf.maxSize;
+	}
+	
+	public static boolean activated(int i) {
+		return (i >= 0 && i < activated.length) ? activated[i] : false;
 	}
 
 	public static class UnionFind {
