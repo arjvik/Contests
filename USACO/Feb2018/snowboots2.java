@@ -5,12 +5,15 @@ TASK: snowboots
 */
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class snowboots2 {
-	private static final boolean SKIP_ALREADY_CONNECTED_CHECK = Boolean.TRUE;
 	private static int[] depth, b_depth, b_dist;
 	private static boolean[] activated;
 	private static int maxDepth = Integer.MIN_VALUE;
+	private static List<Integer> sortedDepthIndexes;
+	private static int sortedDepthIndexPos;
 
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(new BufferedReader(new FileReader("snowboots.in")));
@@ -26,6 +29,8 @@ public class snowboots2 {
 			if(depth[i] > maxDepth)
 				maxDepth = depth[i];
 		}
+		sortedDepthIndexes = IntStream.range(0, n-1).mapToObj(i->i).collect(Collectors.toList());
+		sortedDepthIndexes.sort((i,j) -> depth[j] - depth[i]);
 		Map<Integer, Integer> depth_dist = new TreeMap<>((i,j) -> j-i);
 		for (int i = 0; i < b; i++) {
 			b_depth[i] = in.nextInt();
@@ -48,7 +53,7 @@ public class snowboots2 {
 	private static int getMaxStretch(int bd, UnionFind uf, int n) {
 		if(bd >= maxDepth)
 			return 0;
-		for(int i = 0; i < n; i++) {
+		/*for(int i = 0; i < n; i++) {
 			if(!activated(i) && depth[i] > bd) {
 				activated[i] = true;
 				if(activated(i-1))
@@ -56,6 +61,13 @@ public class snowboots2 {
 				if(activated(i+1))
 					uf.union(i, i+1);
 			}
+		}*/
+		for(int i; depth[(i = sortedDepthIndexes.get(sortedDepthIndexPos))] > bd; sortedDepthIndexPos++) {
+			activated[i] = true;
+			if(activated(i-1))
+				uf.union(i-1, i);
+			if(activated(i+1))
+				uf.union(i, i+1);
 		}
 		return uf.maxSize;
 	}
