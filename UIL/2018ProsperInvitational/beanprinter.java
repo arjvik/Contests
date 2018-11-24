@@ -5,7 +5,6 @@ TASK: beanprinter
 */
 import java.io.IOException;
 
-@SuppressWarnings("unused")
 public class beanprinter {
 	public static void main(String[] args) throws IOException {
 		System.out.println("BBBBB-EEEEE-------A-------N-----N\n" + 

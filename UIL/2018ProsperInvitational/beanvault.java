@@ -7,7 +7,6 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.*;
 
-@SuppressWarnings("unused")
 public class beanvault {
 	public static class Bean { int w; int v; public Bean(int ww) {w=ww;} public String toString() {return String.format("%d %d", w, v);}}
 	public static void main(String[] args) throws IOException {

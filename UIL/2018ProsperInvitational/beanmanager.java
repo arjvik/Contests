@@ -6,7 +6,6 @@ TASK: beanmanager
 import java.io.*;
 import java.util.*;
 
-@SuppressWarnings("unused")
 public class beanmanager {
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(new BufferedReader(new FileReader("beanmanager.dat")));

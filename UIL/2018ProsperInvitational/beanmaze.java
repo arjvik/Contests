@@ -6,7 +6,6 @@ TASK: beanmaze
 import java.io.*;
 import java.util.*;
 
-@SuppressWarnings("unused")
 public class beanmaze {
 	public static class Pair {
 		final int x,y;

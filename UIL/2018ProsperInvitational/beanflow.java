@@ -6,7 +6,6 @@ TASK: beanflowq
 import java.io.*;
 import java.util.*;
 
-@SuppressWarnings("unused")
 public class beanflow {
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(new BufferedReader(new FileReader("beanflow.dat")));
