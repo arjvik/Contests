@@ -25,5 +25,6 @@
 	<classpathentry kind="src" path="FirstBytes/2018/Novice"/>
 	<classpathentry kind="src" path="FirstBytes/2018/Advanced"/>
 	<classpathentry kind="src" path="TEMPLATES"/>
+	<classpathentry kind="src" path="AdventOfCode/2018"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
