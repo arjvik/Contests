@@ -59,6 +59,10 @@ class Scanner{
 		scan=new java.util.Scanner(System.in);
 		System.err.println("Reading input from \"file\"...");
 	}
+	public Scanner(String string) {
+		//Don't read from console when scanning String
+		scan=new java.util.Scanner(string);
+	}
 	public int nextInt() {
 		return scan.nextInt();
 	}
