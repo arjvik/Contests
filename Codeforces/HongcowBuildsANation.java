@@ -7,7 +7,6 @@ TASK: HongcowBuildsANation
 import java.io.*;
 import java.util.*;
 
-@SuppressWarnings("unused")
 public class HongcowBuildsANation {
 	private static final class Pair { public final Integer x; public final Integer y; public Pair(Integer t1, Integer t2) { x = t1; y = t2; } }
 
