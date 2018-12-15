@@ -55,7 +55,7 @@ public class Day14_ChocolateCharts {
 	}
 	
 	private static int part2(int input) {
-		part1(1_000_000_00);
+		part1(100_000_000);
 		String scores = sb.stream().map(String::valueOf).collect(Collectors.joining());
 		String inputStr = Integer.toString(input);
 		return scores.indexOf(inputStr);
