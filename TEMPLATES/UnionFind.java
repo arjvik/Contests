@@ -1,13 +1,10 @@
-
 /*
 ID: arjvik1
 LANG: JAVA
 TASK: UnionFind
 */
-import java.io.*;
 import java.util.*;
 
-@SuppressWarnings("unused")
 public class UnionFind {
 	private final int[] parent;
 	private final int[] rank;
