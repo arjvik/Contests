@@ -17,7 +17,8 @@ public class Day18_SettlersOfTheNorthPole {
 	}
 
 	private static int run(char[][] grid, int iterCount) {
-//		printGrid(grid, 0);
+		Map<Integer, Integer> history = new HashMap<>();
+		history.put(Arrays.deepHashCode(grid), -1);
 		for (int iter = 0; iter < iterCount; iter++) {
 			char[][] newGrid = new char[grid.length][grid.length];
 			for (int i = 0; i < grid.length; i++) {
@@ -75,7 +76,17 @@ public class Day18_SettlersOfTheNorthPole {
 				}
 			}
 			grid = newGrid;
-//			printGrid(grid, iter+1);
+			if (history == null) {
+				// Do nothing because we already finished checking for loops.
+				// Now it is just normal iterations.
+			} else if (history.containsKey(Arrays.deepHashCode(grid))) {
+				int cycleSize = iter - history.get(Arrays.deepHashCode(grid));
+				int skipCycles = (iterCount - iter)/cycleSize;
+				iter += skipCycles*cycleSize;
+				history = null;
+			} else {
+				history.put(Arrays.deepHashCode(grid), iter);
+			}
 		}
 		int tree = 0,
 			lumber = 0;
@@ -90,16 +101,6 @@ public class Day18_SettlersOfTheNorthPole {
 					break;
 				}
 		return tree*lumber;
-	}
-
-	private static void printGrid(char[][] grid, int iter) {
-		System.out.printf("Iteration %d%n", iter);
-		for (char[] arr : grid) {
-			for (char c : arr)
-				System.out.print(c);
-			System.out.println();
-		}
-		System.out.println();
 	}
 
 	private static int adj(char[][] grid, int i, int j, char c) {
