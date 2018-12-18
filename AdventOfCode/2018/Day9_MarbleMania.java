@@ -11,39 +11,48 @@ public class Day9_MarbleMania {
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(System.in);
 		int players = in.nextInt();
-		in.next(); in.next(); in.next(); in.next(); in.next();
+		while (!in.hasNextInt())
+			in.next();
 		int marbles = in.nextInt();
 		System.out.printf("Part 1: %d%n", part1(players, marbles));
 		System.out.printf("Part 2: %d%n", part2(players, marbles));
 		in.close();
 	}
 
-	private static int part1(int players, int marbles) {
+	private static long part1(int players, int marbles) {
 		int player = 0;
-		int[] score = new int[players];
-		List<Integer> circle = new ArrayList<>();
-		circle.add(0);
-		int curr = 0;
+		long[] score = new long[players];
+		Node head = new Node(0);
+		head.next = head.prev = head;
 		for (int m = 1; m <= marbles; m++, player = (player + 1) % players) {
 			if (!(m % 23 == 0)) {
-				curr = mod(curr + 2, circle.size());
-				circle.add(curr, m);
+				Node n = new Node(m);
+				n.prev = head.next;
+				n.next = head.next.next;
+				n.prev.next = n;
+				n.next.prev = n;
+				head = n;
 			} else {
-				curr = mod(curr - 7, circle.size());
-				score[player] += circle.remove(curr) + m;
+				Node r = head.prev.prev.prev.prev.prev.prev.prev;
+				score[player] += r.value + m;
+				r.prev.next = r.next;
+				r.next.prev = r.prev;
+				head = r.next;
 			}
 		}
-		return Arrays.stream(score).max().getAsInt();
-	}
-	
-	private static int mod(int i, int m) {
-		int a = i % m;
-		while (a < 0)
-			a += m;
-		return a;
+		return Arrays.stream(score).max().getAsLong();
 	}
 
-	private static int part2(int players, int marbles) {
-		return part1(players, marbles*100);
+	private static long part2(int players, int marbles) {
+		return part1(players, marbles * 100);
+	}
+
+	private static class Node {
+		public final int value;
+		public Node next, prev;
+
+		public Node(int value) {
+			this.value = value;
+		}
 	}
 }
