@@ -38,12 +38,14 @@ public class Graph<T> {
 
 	public void addNode(T value) {
 		nodes.add(new Node(value));
+		numNodes++;
 	}
 
 	public void connect(int i, int j, int weight) {
 		nodes.get(i).edges.put(j, weight);
 		if (!directed)
 			nodes.get(j).edges.put(i, weight);
+		numEdges++;
 	}
 
 	public class DijkstrasNode extends Node {
