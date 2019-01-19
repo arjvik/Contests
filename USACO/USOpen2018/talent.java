@@ -28,7 +28,7 @@ public class talent {
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("talent.out")));
 		int N = in.nextInt(),
 			W = in.nextInt();
-		Team overweight = new Team(1,-1);
+		Team overweight = new Team(6969,-6969);
 		List<Team> underweight = new ArrayList<>();
 		for (int i = 0; i < N; i++) {
 			System.err.println("Processing cow "+i);
