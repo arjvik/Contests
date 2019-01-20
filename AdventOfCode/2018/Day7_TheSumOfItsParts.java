@@ -6,7 +6,6 @@ TASK: Day7_TheSumOfItsParts
 import java.io.*;
 import java.util.*;
 
-@SuppressWarnings("unused")
 public class Day7_TheSumOfItsParts {
 	public static class Node {
 		public char name;
