@@ -1,34 +1,60 @@
 import java.io.Closeable;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.stream.Stream;
 
 class PrintWriter implements Closeable {
+	private static PrintStream oldOut;
+	private static boolean warn = false;
+	static{
+		oldOut = System.out;
+		System.setOut(new PrintStream(System.out) {
+			@Override
+			public void println(String s) {
+				if(!warn) {
+						oldOut.print("PLEASE DO NOT USE SYSTEM.OUT! USE REGULAR OUT INSTEAD!\n");
+					System.err.print("PLEASE DO NOT USE SYSTEM.OUT! USE REGULAR OUT INSTEAD!\n");
+					warn = true;
+				}
+				super.println(s);
+			}
+			@Override
+			public void println(int i) {
+				if(!warn) {
+						oldOut.print("PLEASE DO NOT USE SYSTEM.OUT! USE REGULAR OUT INSTEAD!\n");
+					System.err.print("PLEASE DO NOT USE SYSTEM.OUT! USE REGULAR OUT INSTEAD!\n");
+					warn = true;
+				}
+				super.println(i);
+			}
+		});
+	}
 	public PrintWriter(Object wildcard) {
 		
 	}
 	public void println(int i){
-		System.out.println(i);
+		oldOut.println(i);
 	}
 	public void println(String s){
-		System.out.println(s);
+		oldOut.println(s);
 	}
 	public void println(Object o){
-		System.out.println(o);
+		oldOut.println(o);
 	}
 	public void println(char c){
-		System.out.println(c);
+		oldOut.println(c);
 	}
 	public void close(){
-		//System.out.println("PrintWriter closed");
+		//oldOut.println("PrintWriter closed");
 	}
 	public void print(int i){
-		System.out.print(i);
+		oldOut.print(i);
 	}
 	public void print(String s){
-		System.out.print(s);
+		oldOut.print(s);
 	}
 	public void print(Object o){
-		System.out.print(o);
+		oldOut.print(o);
 	}
 	public void print(char c){
 		System.out.print(c);
