@@ -29,7 +29,7 @@ public class talent {
 		int N = in.nextInt(),
 			W = in.nextInt();
 		Team overweight = new Team(6969,-6969);
-		List<Team> underweight = new ArrayList<>();
+		TreeSet<Team> underweight = new TreeSet<>((t, u) -> t.w - u.w);
 		for (int i = 0; i < N; i++) {
 			System.err.println("Processing cow "+i);
 			int w = in.nextInt(),
@@ -47,7 +47,7 @@ public class talent {
 					if (newTeam.w >= W && newTeam.ratio() > overweight.ratio())
 							overweight = newTeam;
 					else if (newTeam.w < W)
-						newUnderweight.add(newTeam);
+						addIf(underweight, newUnderweight, newTeam);
 				}
 				underweight.addAll(newUnderweight);
 			} else {
@@ -60,14 +60,21 @@ public class talent {
 					if (newTeam.w >= W && newTeam.ratio() > overweight.ratio())
 							overweight = newTeam;
 					else if (newTeam.w < W)
-						newUnderweight.add(newTeam);
+						addIf(underweight, newUnderweight, newTeam);
 				}
 				underweight.addAll(newUnderweight);
-				underweight.add(new Team(w,t));
+				addIf(underweight, underweight, new Team(w,t));
 			}
 		}
 		out.println((int)(overweight.ratio()*1000));
 		in.close();
 		out.close();
 	}
+	
+	private static void addIf(TreeSet<Team> underweight, Collection<Team> newUnderweight, Team newTeam) {
+//		Team ceil = underweight.ceiling(newTeam);
+//		if (ceil == null || ceil.ratio() < newTeam.ratio())
+			newUnderweight.add(newTeam);
+	}
+	
 }
