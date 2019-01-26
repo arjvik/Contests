@@ -134,8 +134,7 @@ public class shortcut {
 			List<DijkstrasNode> djk = nodes.stream().map(DijkstrasNode::new).collect(Collectors.toList());
 			djk.get(source).dist = 0;
 			PriorityQueue<Pair<DijkstrasNode, Integer>> q = new PriorityQueue<>(
-										(i, j) -> i.x.dist == j.x.dist ? i.y - j.y
-																	   : j.x.previous.id - i.x.previous.id);
+										(i, j) -> i.x.dist == j.x.dist ? i.x.previous.id - j.x.previous.id : i.x.dist - i.x.dist);
 			
 			q.add(new Pair<>(djk.get(source), source));
 			int visitCount = 0;
