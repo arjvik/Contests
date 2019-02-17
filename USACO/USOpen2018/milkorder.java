@@ -11,7 +11,8 @@ import java.util.stream.*;
 
 public class milkorder {
 	public static void main(String[] args) throws IOException {
-		Scanner in = new Scanner(new BufferedReader(new FileReader("milkorder.in")));
+//		Scanner in = new Scanner(new BufferedReader(new FileReader("milkorder.in")));
+		FastScanner in = new FastScanner(new FileInputStream("milkorder.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("milkorder.out")));
 		int n = in.nextInt(),
 			m = in.nextInt();
@@ -40,12 +41,12 @@ public class milkorder {
 						graph.connect(obs[i][j], obs[i][j+1], 1);
 			}
 			
-			if (graph.containsCycleDFS()) {
+			if (graph.containsCycle()) {
 				end = mid-1;
 			} else {
 				for (int j = 0; j < obs[mid+1].length-1; j++)
 					graph.connect(obs[mid+1][j], obs[mid+1][j+1], 1);
-				if (graph.containsCycleDFS())
+				if (graph.containsCycle())
 					end = begin-1;
 				else
 					begin=mid+1;
@@ -63,11 +64,10 @@ public class milkorder {
 						 .map(node -> node.value)
 						 .map(i -> Integer.toString(i))
 						 .collect(Collectors.joining(" ")));
-		in.close();
 		out.close();
 	}
 
-	private static int[] readArray(Scanner in, int n) {
+	private static int[] readArray(FastScanner in, int n) {
 		int[] array = new int[n];
 		for (int i = 0; i < n; i++)
 			array[i] = in.nextInt()-1;
@@ -158,31 +158,29 @@ public class milkorder {
 			}
 		}
 		
-		public boolean containsCycleDFS() {
-			Stack<Integer> q = new Stack<>();
-			boolean[] visited = new boolean[numNodes];
-			int numVisited = 0;
-			q.push(0);
-			while (numVisited < numNodes) {
-				int id = q.pop();
-				if (visited[id])
+		public boolean containsCycle() {
+			int[] visited = new int[numNodes];
+			int source = -1;
+			while ((source = getFirstUnvisited(visited)) != -1)
+				if (containsCycleInternalDFS(source, visited))
 					return true;
-				visited[id] = true;
-				numVisited++;
-				Node n = nodes.get(id);
-				for (int c: n.edges.keySet())
-					q.add(c);
-				if (q.isEmpty())
-					q.add(getFirstUnvisited(visited));
-			}
 			return false;
 		}
 
-		private int getFirstUnvisited(boolean[] visited) {
+		private int getFirstUnvisited(int[] visited) {
 			for (int i = 0; i < visited.length; i++)
-				if (!visited[i])
+				if (visited[i] == 0)
 					return i;
 			return -1;
+		}
+		
+		private boolean containsCycleInternalDFS(int source, int[] visited) {
+			visited[source] = 1;
+			for (int child : nodes.get(source).edges.keySet())
+				if (visited[child] == 1 || visited[child] == 0 && containsCycleInternalDFS(child, visited))
+					return true;
+			visited[source] = 2;
+			return false;
 		}
 		
 		public List<Node> topologicalSort() {
@@ -250,5 +248,20 @@ public class milkorder {
 
 	}
 
+	//-------------FAST SCANNER------------------
+	
+	private static class FastScanner{private InputStream s;private byte[]b=new byte[1024];private int c;private int n;
+	public FastScanner(InputStream s){this.s=s;}
+	int read(){if(c>=n){c=0;try{n=s.read(b);}catch(IOException e){}if(n<=0)return-1;}return b[c++];}
+	boolean isSpaceChar(int c){return c==' '||c=='\n'||c=='\r'||c=='\t'||c==-1;}
+	boolean isEndline(int c){return c=='\n'||c=='\r'||c==-1;}
+	int nextInt(){return Integer.parseInt(next());}
+	long nextLong(){return Long.parseLong(next());}
+	double nextDouble(){return Double.parseDouble(next());}
+	String next(){int c=read();while(isSpaceChar(c))
+		c=read();StringBuilder res=new StringBuilder();do{res.appendCodePoint(c);c=read();}while(!isSpaceChar(c));return res.toString();}
+	String nextLine(){int c=read();while(isEndline(c))
+		c=read();StringBuilder res=new StringBuilder();do{res.appendCodePoint(c);c=read();}while(!isEndline(c));return res.toString();}
+}
 
 }

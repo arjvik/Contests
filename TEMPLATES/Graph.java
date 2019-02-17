@@ -93,31 +93,29 @@ public class Graph<T> {
 		}
 	}
 	
-	public boolean containsCycleDFS() {
-		Stack<Integer> q = new Stack<>();
-		boolean[] visited = new boolean[numNodes];
-		int numVisited = 0;
-		q.push(0);
-		while (numVisited < numNodes) {
-			int id = q.pop();
-			if (visited[id])
+	public boolean containsCycle() {
+		int[] visited = new int[numNodes];
+		int source = -1;
+		while ((source = getFirstUnvisited(visited)) != -1)
+			if (containsCycleInternalDFS(source, visited))
 				return true;
-			visited[id] = true;
-			numVisited++;
-			Node n = nodes.get(id);
-			for (int c: n.edges.keySet())
-				q.add(c);
-			if (q.isEmpty())
-				q.add(getFirstUnvisited(visited));
-		}
 		return false;
 	}
 
-	private int getFirstUnvisited(boolean[] visited) {
+	private int getFirstUnvisited(int[] visited) {
 		for (int i = 0; i < visited.length; i++)
-			if (!visited[i])
+			if (visited[i] == 0)
 				return i;
 		return -1;
+	}
+	
+	private boolean containsCycleInternalDFS(int source, int[] visited) {
+		visited[source] = 1;
+		for (int child : nodes.get(source).edges.keySet())
+			if (visited[child] == 1 || visited[child] == 0 && containsCycleInternalDFS(child, visited))
+				return true;
+		visited[source] = 2;
+		return false;
 	}
 	
 	public List<Node> topologicalSort() {
