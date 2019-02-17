@@ -7,6 +7,8 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 
 public class Graph<T> {
@@ -35,7 +37,18 @@ public class Graph<T> {
 		nodes = new ArrayList<>();
 		this.directed = directed;
 	}
-
+	
+	public Graph(boolean directed, int numNodes, T value) {
+		this(directed, numNodes, i -> value);
+	}
+	
+	public Graph(boolean directed, int numNodes, Function<Integer, T> values) {
+		nodes = new ArrayList<>(numNodes);
+		this.directed = directed;
+		for (int i = 0; i < numNodes; i++)
+			addNode(values.apply(i));
+	}
+	
 	public void addNode(T value) {
 		nodes.add(new Node(value));
 		numNodes++;
@@ -48,24 +61,9 @@ public class Graph<T> {
 		numEdges++;
 	}
 
-	public class DijkstrasNode extends Node {
-		int dist = -1;
-		boolean visited = false;
-		DijkstrasNode previous;
-
-		public DijkstrasNode(T value) {
-			super(value);
-		}
-
-		public DijkstrasNode(Node node) {
-			super(node.value);
-			this.edges = node.edges;
-		}
-	}
-
 	public void processBFS(int source, BiConsumer<Node, Integer> consumer) {
 		Queue<Integer> q = new LinkedList<>();
-		boolean[] visited = new boolean[nodes.size()];
+		boolean[] visited = new boolean[numNodes];
 		q.add(source);
 		while (!q.isEmpty()) {
 			int id = q.poll();
@@ -81,7 +79,7 @@ public class Graph<T> {
 
 	public void processDFS(int source, BiConsumer<Node, Integer> consumer) {
 		Stack<Integer> q = new Stack<>();
-		boolean[] visited = new boolean[nodes.size()];
+		boolean[] visited = new boolean[numNodes];
 		q.push(source);
 		while (!q.isEmpty()) {
 			int id = q.pop();
@@ -92,6 +90,70 @@ public class Graph<T> {
 			consumer.accept(n, id);
 			for (int c: n.edges.keySet())
 				q.add(c);
+		}
+	}
+	
+	public boolean containsCycleDFS() {
+		Stack<Integer> q = new Stack<>();
+		boolean[] visited = new boolean[numNodes];
+		int numVisited = 0;
+		q.push(0);
+		while (numVisited < numNodes) {
+			int id = q.pop();
+			if (visited[id])
+				return true;
+			visited[id] = true;
+			numVisited++;
+			Node n = nodes.get(id);
+			for (int c: n.edges.keySet())
+				q.add(c);
+			if (q.isEmpty())
+				q.add(getFirstUnvisited(visited));
+		}
+		return false;
+	}
+
+	private int getFirstUnvisited(boolean[] visited) {
+		for (int i = 0; i < visited.length; i++)
+			if (!visited[i])
+				return i;
+		return -1;
+	}
+	
+	public List<Node> topologicalSort() {
+		PriorityQueue<Integer> q = new PriorityQueue<Integer>((i,j) -> i-j);
+		List<Node> topo = new ArrayList<>();
+		int[] inDegree = new int[numNodes];
+		for (int i = 0; i < numNodes; i++)
+			for (int j : nodes.get(i).edges.keySet())
+				inDegree[j]++;
+		for (int i = 0; i < numNodes; i++)
+			if (inDegree[i] == 0)
+				q.add(i);
+		while (!q.isEmpty()) {
+			Node n = nodes.get(q.poll());
+			topo.add(n);
+			for (int i : n.edges.keySet()) {
+				inDegree[i]--;
+				if (inDegree[i] == 0)
+					q.add(i);
+			}
+		}
+		return topo;
+	}
+
+	public class DijkstrasNode extends Node {
+		int dist = -1;
+		boolean visited = false;
+		DijkstrasNode previous;
+
+		public DijkstrasNode(T value) {
+			super(value);
+		}
+
+		public DijkstrasNode(Node node) {
+			super(node.value);
+			this.edges = node.edges;
 		}
 	}
 
