@@ -1,8 +1,3 @@
-/*
-ID: arjvik1
-LANG: JAVA
-TASK: UnionFind
-*/
 import java.util.*;
 
 public class UnionFind {

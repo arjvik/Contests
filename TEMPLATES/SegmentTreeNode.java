@@ -1,8 +1,3 @@
-/*
-ID: arjvik1
-LANG: JAVA
-TASK: SegmentTreeNode
-*/
 
 public class SegmentTreeNode {
 	public final int startInclusive, endExclusive, split;

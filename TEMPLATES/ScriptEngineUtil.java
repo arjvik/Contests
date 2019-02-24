@@ -1,9 +1,3 @@
-
-/*
-ID: arjvik1
-LANG: JAVA
-TASK: ScriptEngineUtil
-*/
 import java.io.IOException;
 
 import javax.script.ScriptEngine;

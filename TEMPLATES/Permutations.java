@@ -1,8 +1,3 @@
-/*
-ID: arjvik1
-LANG: JAVA
-TASK: Permutations
-*/
 import java.io.*;
 import java.util.*;
 import java.util.stream.*;
