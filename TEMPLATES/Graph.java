@@ -73,7 +73,8 @@ public class Graph<T> {
 			Node n = nodes.get(id);
 			consumer.accept(n, id);
 			for (int c: n.edges.keySet())
-				q.add(c);
+				if (!visited[c])
+					q.add(c);
 		}
 	}
 
@@ -89,7 +90,8 @@ public class Graph<T> {
 			Node n = nodes.get(id);
 			consumer.accept(n, id);
 			for (int c: n.edges.keySet())
-				q.add(c);
+				if (!visited[c])
+					q.add(c);
 		}
 	}
 	
