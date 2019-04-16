@@ -8,6 +8,7 @@ Minimized version of Pair:
 public static class Pair<X, Y> {
 	public X x;public Y y;public Pair(X x, Y y) {this.x = x;this.y = y;}
 	public static Pair<Integer, Integer> ofInt(int x, int y) {return new Pair<Integer, Integer>(x,y);}
+	public static <X,Y> Pair<X,Y> of(X x,Y y){return new Pair<X, Y>(x, y);}
 	public X getX() {return x;} public void setX(X x) {this.x = x;}
 	public Y getY() {return y;} public void setY(Y y) {this.y = y;}
 	@Override public int hashCode() {final int prime = 31;int result = 1;
@@ -33,6 +34,9 @@ public class Pair<X, Y> {
 	}
 	public static Pair<Integer, Integer> ofInt(int x, int y) {
 		return new Pair<Integer, Integer>(x,y);
+	}
+	public static <X, Y> Pair<X, Y> of(X x, Y y) {
+		return new Pair<X, Y>(x, y);
 	}
 	public X getX() {
 		return x;
