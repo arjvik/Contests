@@ -3,7 +3,7 @@ import java.util.*;
 import java.util.stream.*;
 
 @SuppressWarnings("unused")
-public class Cards {
+public class Cards_626B {
 	private static int dp[][][];
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(System.in);

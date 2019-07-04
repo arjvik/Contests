@@ -3,7 +3,7 @@ import java.util.*;
 import java.util.stream.*;
 
 @SuppressWarnings("unused")
-public class AyoubAndLostArray {
+public class AyoubAndLostArray_1105C {
 	public static long MOD = (long) (1e9+7);
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(System.in);

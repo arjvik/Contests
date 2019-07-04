@@ -3,7 +3,7 @@ import java.util.*;
 import java.util.stream.*;
 
 @SuppressWarnings("unused")
-public class TheFairNutAndString {
+public class TheFairNutAndString_1084C {
 	public static long MOD = (long) (1e9+7);
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(System.in);

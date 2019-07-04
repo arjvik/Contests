@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.*;
 
 @SuppressWarnings("unused")
-public class RoadsInBerland {
+public class RoadsInBerland_25C {
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(System.in);
 		int n = in.nextInt();

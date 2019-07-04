@@ -7,7 +7,7 @@ TASK: HongcowBuildsANation
 import java.io.*;
 import java.util.*;
 
-public class HongcowBuildsANation {
+public class HongcowBuildsANation_744A {
 	private static final class Pair { public final Integer x; public final Integer y; public Pair(Integer t1, Integer t2) { x = t1; y = t2; } }
 
 	private static boolean[] visited;

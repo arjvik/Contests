@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.stream.*;
 
 @SuppressWarnings("unused")
-public class NikitaAndString {
+public class NikitaAndString_877B {
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(System.in);
 		String s = in.nextLine();
