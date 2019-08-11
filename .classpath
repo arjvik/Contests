@@ -3,6 +3,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="src" path="DEBUG"/>
+	<classpathentry kind="src" path="TEMPLATES"/>
 	<classpathentry kind="src" path="USACO/Dec2015"/>
 	<classpathentry kind="src" path="USACO/USOpen2016"/>
 	<classpathentry kind="src" path="USACO/Dec2016"/>
@@ -25,12 +26,12 @@
 	<classpathentry kind="src" path="UIL/2012Regional"/>
 	<classpathentry kind="src" path="UIL/2018ProsperInvitational"/>
 	<classpathentry kind="src" path="UIL/2019Regional"/>
-	<classpathentry kind="src" path="OpenKattis"/>
 	<classpathentry kind="src" path="FirstBytes/2017/Novice"/>
 	<classpathentry kind="src" path="FirstBytes/2018/Novice"/>
 	<classpathentry kind="src" path="FirstBytes/2018/Advanced"/>
-	<classpathentry kind="src" path="TEMPLATES"/>
-	<classpathentry kind="src" path="Codeforces"/>
+	<classpathentry kind="src" path="OnlineJudges/Codeforces"/>
+	<classpathentry kind="src" path="OnlineJudges/OpenKattis"/>
+	<classpathentry kind="src" path="OnlineJudges/Misc"/>
 	<classpathentry kind="src" path="AdventOfCode/2018"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
