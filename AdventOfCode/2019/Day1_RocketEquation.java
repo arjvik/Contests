@@ -1,8 +1,7 @@
 import java.io.*;
-import java.util.*;
-import java.util.stream.IntStream;
+import java.util.stream.*;
 
-public class Day1_Test {
+public class Day1_RocketEquation {
 	public static void main(String[] args) throws IOException {
 		System.out.println("Part 1: "+part1());
 		System.out.println("Part 2: "+part2());
