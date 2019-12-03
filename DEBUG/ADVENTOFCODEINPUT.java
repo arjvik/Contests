@@ -3,6 +3,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -33,7 +34,12 @@ public class ADVENTOFCODEINPUT {
 	}
 	
 	public static IntStream readNums(int day) {
-		return readLines(day).map(Integer::parseInt).mapToInt(Integer::intValue);
+		return readLines(day).flatMap(s -> Arrays.stream(s.split(",")))
+							 .mapToInt(Integer::parseInt);
+	}
+	
+	public static Stream<String> readWords(int day) {
+		return readLines(day).flatMap(s -> Arrays.stream(s.split(",")));
 	}
 	
 	public static List<String> readLineList(int day) {
@@ -41,7 +47,13 @@ public class ADVENTOFCODEINPUT {
 	}
 	
 	public static List<Integer> readNumList(int day) {
-		return readLines(day).map(Integer::parseInt).collect(Collectors.toList());
+		return readLines(day).flatMap(s -> Arrays.stream(s.split(",")))
+							 .map(Integer::parseInt)
+							 .collect(Collectors.toList());
+	}
+	
+	public static List<String> readWordList(int day) {
+		return readWords(day).collect(Collectors.toList());
 	}
 	
 	private static String getSessionCookie() {

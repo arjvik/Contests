@@ -3,10 +3,7 @@ import java.io.*;
 
 public class Day2_1202ProgramAlarm {
 	
-	private static int[] a = ADVENTOFCODEINPUT.readLines(2)
-			 								  .flatMap(s -> Arrays.stream(s.split(",")))
-			 								  .mapToInt(Integer::parseInt)
-			 								  .toArray();
+	private static int[] a = ADVENTOFCODEINPUT.readNums(2).toArray();
 	
 	public static void main(String[] args) throws IOException {
 		System.out.println("Part 1: " + part1());
