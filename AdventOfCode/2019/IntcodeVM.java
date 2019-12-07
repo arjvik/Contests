@@ -9,8 +9,6 @@ public class IntcodeVM {
 	private List<Integer> tape, code;
 	private int pointer;
 	private int mode, params; //internals
-	private Queue<Integer> input;
-	private List<Integer> output;
 	
 	private boolean outputOnlyZeros = true;
 	private boolean inputLoops = false;
@@ -37,8 +35,6 @@ public class IntcodeVM {
 		pointer = 0;
 		mode = -1;
 		params = -1;
-		input = new LinkedList<>();
-		output = new LinkedList<>();
 	}
 	
 	public List<Integer> getTape() {
@@ -56,8 +52,15 @@ public class IntcodeVM {
 	public List<Integer> run(Integer... input) {
 		return run(new LinkedList<Integer>(Arrays.asList(input)));
 	}
+	
+	public List<Integer> runAndReset(Integer... input) {
+		List<Integer> output = run(input);
+		reset();
+		return output;
+	}
 
 	private List<Integer> run(Queue<Integer> input) {
+		List<Integer> output = new LinkedList<>();
 		while (pointer != -1) {
 			int opcode = tape.get(pointer);
 			mode = opcode / 100;
