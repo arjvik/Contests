@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingDeque;
 
-public class Day7_Test {
+public class Day7_AmplificationCircuit {
 	
 	
 	public static void main(String[] args) throws Exception {
