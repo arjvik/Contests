@@ -5,10 +5,10 @@ public class Day5_SunnyWithAChanceOfAsteroids {
 	}
 
 	private static int part1() {
-		return new IntcodeVM(5).run(1).get(0);
+		return new IntcodeVM(5).run(1).poll();
 	}
 
 	private static int part2() {
-		return new IntcodeVM(5).run(5).get(0);
+		return new IntcodeVM(5).run(5).poll();
 	}
 }

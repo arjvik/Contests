@@ -3,14 +3,17 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
 import java.util.stream.Collectors;
 
 public class IntcodeVM {
 	private List<Integer> tape, code;
 	private int pointer;
+	private Queue<Integer> input;
+	private Queue<Integer> output;
 	private int mode, params; //internals
 	
-	private boolean outputOnlyZeros = true;
+	private boolean outputOnlyNonZeros = true;
 	private boolean inputLoops = false;
 	
 	public IntcodeVM(List<Integer> code) {
@@ -31,7 +34,9 @@ public class IntcodeVM {
 	}
 	
 	public void reset() {
-		this.tape = new ArrayList<>(code);
+		tape = new ArrayList<>(code);
+		input = new LinkedList<>();
+		output = new LinkedList<>();
 		pointer = 0;
 		mode = -1;
 		params = -1;
@@ -41,73 +46,118 @@ public class IntcodeVM {
 		return tape;
 	}
 	
-	public void setOutputOnlyZeros(boolean outputOnlyZeros) {
-		this.outputOnlyZeros = outputOnlyZeros;
+	public Queue<Integer> getOutput() {
+		return output;
+	}
+	
+	public Queue<Integer> getInput() {
+		return input;
+	}
+	
+	public void setInput(Queue<Integer> input) {
+		this.input = input;
+	}
+
+	public void setOutput(Queue<Integer> output) {
+		this.output = output;
+	}
+
+	public void setOutputOnlyNonZeros(boolean outputOnlyNonZeros) {
+		this.outputOnlyNonZeros = outputOnlyNonZeros;
 	}
 
 	public void setInputLoops(boolean inputLoops) {
 		this.inputLoops = inputLoops;
 	}
 	
-	public List<Integer> run(Integer... input) {
-		return run(new LinkedList<Integer>(Arrays.asList(input)));
-	}
-	
-	public List<Integer> runAndReset(Integer... input) {
-		List<Integer> output = run(input);
+	public Queue<Integer> runAndReset(Integer... input) {
+		Queue<Integer> output = run(input);
 		reset();
 		return output;
 	}
+	
+	public Queue<Integer> runAndReset(Queue<Integer> input) {
+		Queue<Integer> output = run(input);
+		reset();
+		return output;
+	}
+	
+	public Queue<Integer> run(Integer... input) {
+		return run(new LinkedList<Integer>(Arrays.asList(input)));
+	}
 
-	private List<Integer> run(Queue<Integer> input) {
-		List<Integer> output = new LinkedList<>();
+	public Queue<Integer> run(Queue<Integer> input) {
+		this.input = input;
+		run();
+		return output;
+	}
+
+	public void run() {
 		while (pointer != -1) {
 			int opcode = tape.get(pointer);
 			mode = opcode / 100;
+			
 			switch (opcode % 100) {
-			case 99: hasParams(-99);
-				pointer = -1;
-				break;
-			case 1: hasParams(3);
-				setParam(3, getParam(1)+getParam(2));
-				break;
-			case 2: hasParams(3);
-				setParam(3, getParam(1)*getParam(2));
-				break;
-			case 3: hasParams(1);
-				if (inputLoops)
-					input.add(input.peek());
-				setParam(1, input.poll());
-				break;
-			case 4: hasParams(1);
-				int x = getParam(1);
-				if (!outputOnlyZeros || x != 0)
-					output.add(x);
-				break;
-			case 5: hasParams(2);
-			if (getParam(1) != 0) {
-					pointer = getParam(2);
-					hasParams(-99);
-				}
-				break;
-			case 6: hasParams(2);
-				if (getParam(1) == 0) {
-					pointer = getParam(2);
-					hasParams(-99);
-				}
-				break;
-			case 7: hasParams(3);
-				setParam(3, getParam(1) < getParam(2) ? 1 : 0);
-				break;
-			case 8: hasParams(3);
-				setParam(3, getParam(1) == getParam(2) ? 1 : 0);
-				break;
-			default:
-				throw new RuntimeException("Bad opcode");
+			
+				case 99: hasParams(-99);
+					pointer = -1;
+					break;
+				
+				case 1: hasParams(3);
+					setParam(3, getParam(1)+getParam(2));
+					break;
+				
+				case 2: hasParams(3);
+					setParam(3, getParam(1)*getParam(2));
+					break;
+				
+				case 3: hasParams(1);
+					if (inputLoops)
+						input.add(input.peek());
+					if (input instanceof BlockingQueue<?>)
+						try {
+							setParam(1, ((BlockingQueue<Integer>) input).take());
+						} catch (InterruptedException e) {
+							throw new RuntimeException(e);
+						}
+					else
+						setParam(1, input.poll());
+					break;
+				
+				case 4: hasParams(1);
+					int x = getParam(1);
+					if (!outputOnlyNonZeros || x != 0)
+						output.add(x);
+					break;
+				
+				case 5: hasParams(2);
+				if (getParam(1) != 0) {
+						pointer = getParam(2);
+						hasParams(-99);
+					}
+					break;
+				
+				case 6: hasParams(2);
+					if (getParam(1) == 0) {
+						pointer = getParam(2);
+						hasParams(-99);
+					}
+					break;
+				
+				case 7: hasParams(3);
+					setParam(3, getParam(1) < getParam(2) ? 1 : 0);
+					break;
+				
+				case 8: hasParams(3);
+					setParam(3, getParam(1) == getParam(2) ? 1 : 0);
+					break;
+				
+				default:
+					throw new RuntimeException("Bad opcode");
 			}
+			
 			jumpPastParams();
 		}
-		return output;
 	}
 	
 	private int getParam(int param) {
