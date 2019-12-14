@@ -10,7 +10,7 @@ Minimized version suitable for copy-paste:
 
 
 */
-public class Utils {
+public class IOUtils {
 	public static int[] readArray(Scanner in, int n) {
 		int[] array = new int[n];
 		for (int i = 0; i < n; i++)
