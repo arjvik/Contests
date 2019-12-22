@@ -8,7 +8,6 @@ import java.util.Queue;
 import java.util.Stack;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 
 public class Graph<T> {

@@ -2,7 +2,6 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.*;
 
-@SuppressWarnings("unused")
 public class Day12_NBodyProblem {
 	
 	/**

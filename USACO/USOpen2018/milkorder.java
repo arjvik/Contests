@@ -250,6 +250,7 @@ public class milkorder {
 
 	//-------------FAST SCANNER------------------
 	
+	@SuppressWarnings("unused")
 	private static class FastScanner{private InputStream s;private byte[]b=new byte[1024];private int c;private int n;
 	public FastScanner(InputStream s){this.s=s;}
 	int read(){if(c>=n){c=0;try{n=s.read(b);}catch(IOException e){}if(n<=0)return-1;}return b[c++];}

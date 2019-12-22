@@ -30,6 +30,7 @@ public class callen {
 				System.out.println();
 			}
 			System.out.println("*************************");
+			s.close();
 		}
 
 		in.close();

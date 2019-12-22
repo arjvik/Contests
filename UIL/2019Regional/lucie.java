@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 
-@SuppressWarnings("unused")
 public class lucie {
 	public static void main(String[] args) throws IOException {
 		Scanner in = new Scanner(new BufferedReader(new FileReader("lucie.dat")));
