@@ -23,7 +23,7 @@ public class Day6_UniversalOrbitMap {
 	}
 	
 	public static int part1() {
-		Graph<String> g = new Graph<>(true);
+		GraphOld<String> g = new GraphOld<>(true);
 		Map<String, List<String>> in = ADVENTOFCODEINPUT.readLineList(6)
 				.stream().collect(Collectors.groupingBy(s -> s.substring(0,3), Collectors.mapping(s -> s.substring(4), Collectors.toList())));
 		Map<String, Integer> name2idx = new HashMap<>();
@@ -32,7 +32,7 @@ public class Day6_UniversalOrbitMap {
 	}
 	
 	public static int part2() {
-		Graph<String> g = new Graph<>();
+		GraphOld<String> g = new GraphOld<>();
 		Map<String, List<String>> in = ADVENTOFCODEINPUT.readLineList(6)
 				.stream().collect(Collectors.groupingBy(s -> s.substring(0,3), Collectors.mapping(s -> s.substring(4), Collectors.toList())));
 		Map<String, Integer> name2idx = new HashMap<>();
@@ -40,7 +40,7 @@ public class Day6_UniversalOrbitMap {
 		return g.dijkstras(name2idx.get("YOU")).get(name2idx.get("SAN")).dist-2;
 	}
 
-	private static void add(String name, Map<String, List<String>> in, Graph<String> g, Map<String, Integer> name2idx) {
+	private static void add(String name, Map<String, List<String>> in, GraphOld<String> g, Map<String, Integer> name2idx) {
 		if (!name2idx.containsKey(name)) {
 			name2idx.put(name, g.numNodes);
 			g.addNode(name);
@@ -51,18 +51,18 @@ public class Day6_UniversalOrbitMap {
 		}
 	}
 	
-	public static int numNodes(Graph<String> g, Graph<String>.Node root) {
+	public static int numNodes(GraphOld<String> g, GraphOld<String>.Node root) {
 		int i = 1;
 		for (int next : root.edges.keySet()) {
-			Graph<String>.Node nextNode = g.nodes.get(next);
+			GraphOld<String>.Node nextNode = g.nodes.get(next);
 			i += numNodes(g, nextNode);
 		}
 		return i;
 	}
-	public static int numOrbits(Graph<String> g, Graph<String>.Node root) {
+	public static int numOrbits(GraphOld<String> g, GraphOld<String>.Node root) {
 		int i = numNodes(g, root) - 1;
 		for (int next : root.edges.keySet()) {
-			Graph<String>.Node nextNode = g.nodes.get(next);
+			GraphOld<String>.Node nextNode = g.nodes.get(next);
 			i += numOrbits(g, nextNode);
 		}
 		return i;
