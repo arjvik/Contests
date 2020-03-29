@@ -11,6 +11,7 @@ public class help {
 			event[in.nextInt()-1] = 1;
 			event[in.nextInt()-1] = -1;
 		}
+		@SuppressWarnings("unused")
 		int starts = 0, ends = 0;
 		BigInteger ans = BigInteger.ZERO;
 		for (int i = 0; i < 2*n; i++) {

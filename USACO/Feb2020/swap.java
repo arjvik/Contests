@@ -19,9 +19,9 @@ public class swap {
 			perm[i] = i;
 		int[] res = perm.clone();
 		for (int i = a1, j = a2; i < j; i++, j--)
-			swap(perm, i, j);
+			swapElements(perm, i, j);
 		for (int i = b1, j = b2; i < j; i++, j--)
-			swap(perm, i, j);
+			swapElements(perm, i, j);
 		while (k > 0) {
 			if ((k&1) > 0)
 				res = apply(perm, res); //apply perm to res
@@ -40,7 +40,7 @@ public class swap {
 		return ans;
 	}
 	
-	private static void swap(int[] a, int i, int j) {
+	private static void swapElements(int[] a, int i, int j) {
 		int t = a[i];
 		a[i] = a[j];
 		a[j] = t;

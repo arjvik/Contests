@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.*;
 
-@SuppressWarnings({"unused","resource"})
+@SuppressWarnings("unused")
 public class balance {
 	public static int n;
 	public static HashSet<String> visited = new HashSet<String>();
