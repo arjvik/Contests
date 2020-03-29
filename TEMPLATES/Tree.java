@@ -12,7 +12,8 @@ Minimized version of Tree:
 			public Node heavyChild=null;public boolean isHeavy=false;public int subtreeSize=-1;public int depth=-1;
 			public Node[]up;public Node(T value){this.value=value;children=new ArrayList<>();}}
 		public static<T>Tree<T>newTree(){return new Tree<>();}
-		public static<T>Tree<T>fromUnrootedGraph(Graph<T>g){Tree<T>t=new Tree<>();T rootID=g.nodes.keySet().iterator().next();t.root=t.addNode(rootID,null);g.processSearchExtended(rootID,info->t.addNode(info.node.value,t.nodes.get(info.parent.value)),true);return t;}
+		public static<T>Tree<T>fromUnrootedGraph(Graph<T>g){T rootID=g.nodes.keySet().iterator().next();return fromRootedGraph(g,rootID);}
+		public static <T> Tree<T> fromRootedGraph(Graph<T> g, T rootID){Tree<T> t = new Tree<>();t.root = t.addNode(rootID, null);g.processSearchExtended(rootID, info->{if (!info.node.value.equals(rootID))t.addNode(info.node.value,t.nodes.get(info.parent.value));},true);return t;}
 		public Node addNode(T value,Node parent){if(root==null){root=new Node(value);nodes.put(value,root);return root;}Node n=new Node(value);n.parent=parent;if(parent!=null)parent.children.add(n);nodes.put(value,n);numNodes++;return n;}
 		public void precomputeDepthSubtreeSize(){precomputeDepthSubtreeSizeHelper(root,0);}
 		private int precomputeDepthSubtreeSizeHelper(Node node,int depth){node.depth=depth;node.subtreeSize=1;for(Node child:node.children)node.subtreeSize+=precomputeDepthSubtreeSizeHelper(child,depth+1);return node.subtreeSize;}
@@ -52,10 +53,18 @@ public class Tree<T> {
 	
 	/** Create a new tree from an unrooted {@link Graph} */
 	public static <T> Tree<T> fromUnrootedGraph(Graph<T> g) {
-		Tree<T> t = new Tree<>();
 		T rootID = g.nodes.keySet().iterator().next(); //first set
+		return fromRootedGraph(g, rootID);
+	}
+
+	/** Create a new tree from a {@link Graph} with root rootID */
+	public static <T> Tree<T> fromRootedGraph(Graph<T> g, T rootID) {
+		Tree<T> t = new Tree<>();
 		t.root = t.addNode(rootID, null);
-		g.processSearchExtended(rootID, info -> t.addNode(info.node.value, t.nodes.get(info.parent.value)), true);
+		g.processSearchExtended(rootID, info -> {
+			if (!info.node.value.equals(rootID))
+				t.addNode(info.node.value, t.nodes.get(info.parent.value));
+		}, true);
 		return t;
 	}
 	

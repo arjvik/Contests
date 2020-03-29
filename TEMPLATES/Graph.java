@@ -24,7 +24,7 @@ Minimized version of Graph:
 		public void addNode(T value){nodes.put(value,new Node(value));numNodes++;}
 		public void connect(T n1,T n2,int weight){nodes.get(n1).edges.put(n2,weight);if(!directed)nodes.get(n2).edges.put(n1,weight);numEdges++;}
 		public void removeEdge(T n1,T n2){nodes.get(n1).edges.remove(n2);if(!directed)nodes.get(n2).edges.remove(n1);numEdges--;}
-		public class ExtendedNodeInfo{public final Node node,parent;public final int dist;public ExtendedNodeInfo(Node n,Node parent,int dist){this.node=n;this.parent=parent;this.dist=dist;}}
+		public class ExtendedNodeInfo{public final Node node,parent;public final int dist;public ExtendedNodeInfo(Node n,Node parent,int dist){this.node=n;this.parent=parent;this.dist=dist;}public String toString(){return String.format("%s, P=%s, D=%d",node.value,parent==null?"null":parent.value,dist);}}
 		public void processSearchExtended(T source,Consumer<ExtendedNodeInfo>consumer,boolean bfs){Deque<ExtendedNodeInfo>q=new ArrayDeque<>();Set<T>visited=new HashSet<>();q.add(new ExtendedNodeInfo(nodes.get(source),null,0));while(!q.isEmpty()){ExtendedNodeInfo info=bfs?q.poll():q.removeLast();if(!visited.add(info.node.value))continue;consumer.accept(info);for(T child:info.node.edges.keySet())if(!visited.contains(child))q.add(new ExtendedNodeInfo(nodes.get(child),info.node,info.dist+info.node.edges.get(child)));}}
 		public void processSearch(T source,Consumer<Node>consumer,boolean bfs){processSearchExtended(source,info->consumer.accept(info.node),bfs);}
 		public int distUnweightedBFS(T source,T dest){Queue<ExtendedNodeInfo>q=new LinkedList<>();Set<T>visited=new HashSet<>();q.add(new ExtendedNodeInfo(nodes.get(source),null,0));while(!q.isEmpty()){ExtendedNodeInfo info=q.poll();if(!visited.add(info.node.value))continue;if(info.node.value.equals(dest))return info.dist;for(T child:info.node.edges.keySet())if(!visited.contains(child))q.add(new ExtendedNodeInfo(nodes.get(child),info.node,info.dist+1));}return-1;}
@@ -130,6 +130,9 @@ public class Graph<T> {
 			this.node = n;
 			this.parent = parent;
 			this.dist = dist;
+		}
+		public String toString() {
+			return String.format("%s, P=%s, D=%d", node.value, parent == null ? "null" : parent.value, dist);
 		}
 	}
 	
