@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
@@ -39,6 +41,20 @@ public class IOUtils {
 			for (int j = 0; j < m; j++)
 				array[i][j] = in.nextLong();
 		return array;
+	}
+	
+	public static List<Integer> readArrayList(Scanner in, int n) {
+		ArrayList<Integer> list = new ArrayList<>(n);
+		for (int i = 0; i < n; i++)
+			list.add(in.nextInt());
+		return list;
+	}
+	
+	public static List<Long> readArrayListLong(Scanner in, int n) {
+		ArrayList<Long> list = new ArrayList<>(n);
+		for (int i = 0; i < n; i++)
+			list.add(in.nextLong());
+		return list;
 	}
 	
 	public static <T> void printArray(T[] array) {
