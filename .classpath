@@ -37,5 +37,6 @@
 	<classpathentry kind="src" path="OnlineJudges/Misc"/>
 	<classpathentry kind="src" path="AdventOfCode/2018"/>
 	<classpathentry kind="src" path="AdventOfCode/2019"/>
+	<classpathentry kind="src" path="GoogleFoobar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
