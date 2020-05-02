@@ -1,62 +1,106 @@
-import java.util.*;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DoomsdayFuel {
 
 	/**
 	 * 
-	 * O(n^6) algorithm to analytically solve a Markov Model.
+	 * O(n^4) algorithm to analytically solve a Markov Model:
 	 * 
-	 * I first define n^2 variables, where variable # ni+j represents the
-	 * probability P(i, j) of starting from state i and eventually ending in state j
-	 * eventually.
+	 * Quick notation definitions:
+	 * Let t be the number of terminal states, and let u=n-t be the number of non-terminal states. 
+	 * In addition, let T be the set of terminal states, and U be the set of non-terminal states.
+	 * 
+	 * We define u*t variables, where variable P(i, j) represents the probability
+	 * of starting from non-terminal state i and eventually ending in terminal state j eventually.
 	 * 
 	 * These variables are related by the following equation:
 	 * 
-	 * P(a, b) = Sum_{c} m[a][c] * P(c, b)
+	 * For all (i in U, j in T): 
+	 * P(i, j) = m[i][j] + Sum_{k in U; k != i} m[i][k]*P(k, j)
+	 * 
+	 * As each P(i, j) is only in an equation with other values of P(k, j), we solve t independent
+	 * u*u systems. Each system takes O(u^3) to solve, so our total complexity ends up being
+	 * O(t*u^3) which is proportional to O(n^4).
 	 * 
 	 */
 	public static int[] solution(int[][] m) {
 		final int n = m.length;
-		Fraction[][] probabilities = new Fraction[n][n];
+		
+		List<Integer> terminalStates = new ArrayList<>();
+		List<Integer> nonTerminalStates = new ArrayList<>();
+		// transitions[u in U][s in S] is the probability of transitioning from u to s
+		Map<Integer, List<Fraction>> transitions = new HashMap<>();
+		
+		// Sort the states into terminal and non-terminal
+		// and convert the counts into fractional probabilities
 		for (int i = 0; i < n; i++) {
 			int total = 0;
 			for (int j = 0; j < n; j++)
 				if (i != j)
 					total += m[i][j];
-			if (total == 0)
-				// terminal state always transitions to itself
-				m[i][i] = total = 1;
-			else
-				// we can ignore self transition otherwise
-				// because it ends up collapsing to zero (geometric series)
-				m[i][i] = 0;
-			for (int j = 0; j < n; j++)
-				probabilities[i][j] = new Fraction(m[i][j], total);
+			if (total != 0) {
+				// we can ignore self transition because it ends up collapsing to zero (geometric series)
+				// it works out cleaner later to make this probability -1 (when solving the matrix)
+				m[i][i] = -total;
+				List<Fraction> probabilities = new ArrayList<>();
+				for (int j = 0; j < n; j++)
+					probabilities.add(new Fraction(m[i][j], total));
+				transitions.put(i, probabilities);
+				nonTerminalStates.add(i);
+			} else
+				terminalStates.add(i);
 		}
 
-		int numVars = n * n;
-		Fraction[][] matrix = new Fraction[numVars][numVars + 1];
-
-		for (int i = 0; i < n; i++)
-			for (int j = 0; j < n; j++) {
-				for (int z = 0; z < numVars+1; z++)
-					matrix[n * i + j][z] = Fraction.ZERO;
-				for (int k = 0; k < n; k++)
-					matrix[n * i + j][n*k+j] = probabilities[i][k];
-				matrix[n * i + j][n * i + j] = Fraction.MINUS_ONE;
+		// size of sets T and U
+		final int T = terminalStates.size(),
+				  U = nonTerminalStates.size();
+		
+		// If state 0 is terminal we can break out immediately
+		// Otherwise we will end up in a weird state
+		if (terminalStates.get(0) == 0) {
+			int[] answer = new int[T+1];
+			answer[0] = 1;
+			answer[T] = 1;
+			return answer;
+		}
+		
+		// For each terminal state, we set up a system of equations
+		// solving for the probability of reaching that state
+		// The answer for this state is the value of our first variable
+		List<Fraction> answers = new ArrayList<Fraction>();
+		for (int t : terminalStates) {
+			Fraction[][] matrix = new Fraction[U][U+1];
+			for (int i = 0; i < U; i++) {
+				int u = nonTerminalStates.get(i);
+				for (int j = 0; j < U; j++) {
+					int v = nonTerminalStates.get(j);
+					matrix[i][j] = transitions.get(u).get(v);
+				}
+				matrix[i][U] = transitions.get(u).get(t).negate();
 			}
+			// Converts matrix into Reduced Row Echelon Form - O(U^3)
+			solve(matrix);
+			answers.add(matrix[0][U]);
+		}
 		
-//		System.out.println(Arrays.deepToString(matrix));
-		print(matrix);
-		
-		Fraction[] solution = solve(matrix);
-		System.out.println(Arrays.toString(solution));
-		return null;
+		// Format answer into common denominator fraction
+		int lcm = 1;
+		for (Fraction f : answers)
+			lcm = lcm(lcm, f.denominator);
+		int[] commonDenom = new int[T+1];
+		for (int i = 0; i < T; i++)			
+			commonDenom[i] = answers.get(i).numerator * (lcm / answers.get(i).denominator);
+		commonDenom[answers.size()] = lcm;
+		return commonDenom;
 	}
 
 	/**
 	 * Solve a matrix using Gaussian-Jordan Elimination. Takes O(S^3 time) for an
-	 * S * S matrix (which represents a system of S variables and S equations).
+	 * S*(S+1) matrix (which represents a system of S variables and S equations).
 	 * Uses Gaussian matrix operations to RREF the matrix. Works in place but modifies
 	 * the provided matrix.
 	 */
@@ -98,20 +142,10 @@ public class DoomsdayFuel {
 		return b == 0 ? a : gcd(b, a % b);
 	}
 	
-	private static void print(Fraction[][] matrix) {
-		System.out.println("[");
-		for (Fraction[] row : matrix)
-			System.out.println("\t"+java.util.Arrays.toString(row));
-		System.out.println("]");
-	}
-
 	/**
 	 * Fraction class to manage arithmetic of rational numbers
 	 */
 	public static class Fraction {
-		
-		public static final Fraction ZERO = new Fraction(0, 1),
-									 MINUS_ONE = new Fraction(-1, 1);
 		
 		public final int numerator, denominator;
 
@@ -140,11 +174,13 @@ public class DoomsdayFuel {
 		public Fraction reciprocal() {
 			return new Fraction(denominator, numerator);
 		}
+		
+		public Fraction negate() {
+			return new Fraction(-numerator, denominator);
+		}
 
 		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			return prime * numerator + denominator;
+			return 563 * numerator + denominator;
 		}
 
 		public boolean equals(Object obj) {
@@ -166,8 +202,38 @@ public class DoomsdayFuel {
 	}
 
 	public static void main(String[] args) {
-		solution(new int[][]{{0, 2, 1, 0, 0}, {0, 0, 0, 3, 4}, {0, 0, 0, 0, 0}, {0, 0, 0, 0,0}, {0, 0, 0, 0, 0}});
-//		solution(new int[][] {{0,1,1},{1,0,1},{0,0,1}});
+		int[][][] in = {
+				// Test Case 1
+				{{0, 1, 0, 0, 0, 1},
+				 {4, 0, 0, 3, 2, 0},
+				 {0, 0, 0, 0, 0, 0},
+				 {0, 0, 0, 0, 0, 0},
+				 {0, 0, 0, 0, 0, 0},
+				 {0, 0, 0, 0, 0, 0}},
+				// Test Case 2
+				{{0, 2, 1, 0, 0},
+				 {0, 0, 0, 3, 4},
+				 {0, 0, 0, 0, 0},
+				 {0, 0, 0, 0, 0},
+				 {0, 0, 0, 0, 0}},
+				// Simple hand-solved case
+				{{0, 1, 1},
+			     {1, 0, 1},
+				 {0, 0, 1}},
+				// Trivial case where 0 is terminal
+				{{0, 0},
+				 {0, 0}}
+		};
+		int[][] out = {
+				{0, 3, 2, 9, 14},
+				{7, 6, 8, 21},
+				{1, 1},
+				{1, 0, 1}
+		};
+		for (int i = 0; i < in.length; i++)
+			if (!Arrays.equals(solution(in[i]), out[i]))
+				throw new RuntimeException("Test case " + i + " failed");
+		System.out.println("All test cases successful");
 	}
 
 }
