@@ -4,6 +4,15 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * NOTE: This solution didn't quite work, it only solved 6/10 test cases.
+ * However, the issue lies in its implementation rather than its algorithm
+ * so I am keeping this solution. I hope to be able to correct this solution
+ * in the future.
+ * 
+ * See DoomsdayFuel.md for notes on the problem and possible debugging avenues.
+ */
 public class DoomsdayFuel {
 
 	/**
